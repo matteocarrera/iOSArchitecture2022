@@ -1,0 +1,16 @@
+PODS:
+  - WeaverDI (1.0.7)
+
+DEPENDENCIES:
+  - WeaverDI
+
+SPEC REPOS:
+  trunk:
+    - WeaverDI
+
+SPEC CHECKSUMS:
+  WeaverDI: 1fd0392c5823dd8ba926a5acabc3d11d7de4c8fe
+
+PODFILE CHECKSUM: a90927c5b254e185b83eea65e39f8963d582688b
+
+COCOAPODS: 1.10.1

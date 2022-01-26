@@ -1,0 +1,61 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Alamofire",
+        "repositoryURL": "https://github.com/Alamofire/Alamofire.git",
+        "state": {
+          "branch": null,
+          "revision": "f82c23a8a7ef8dc1a49a8bfc6a96883e79121864",
+          "version": "5.5.0"
+        }
+      },
+      {
+        "package": "Cursors",
+        "repositoryURL": "https://github.com/petropavel13/Cursors",
+        "state": {
+          "branch": null,
+          "revision": "a1561869135e72832eff3b1e729075c56c2eebf6",
+          "version": "0.5.1"
+        }
+      },
+      {
+        "package": "KeychainAccess",
+        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess.git",
+        "state": {
+          "branch": null,
+          "revision": "84e546727d66f1adc5439debad16270d0fdd04e7",
+          "version": "4.2.2"
+        }
+      },
+      {
+        "package": "LeadKit",
+        "repositoryURL": "https://github.com/TouchInstinct/LeadKit",
+        "state": {
+          "branch": null,
+          "revision": "9df3ccb30d1ff9b9aa57e69a362b2b3200581ef9",
+          "version": "1.7.0"
+        }
+      },
+      {
+        "package": "SnapKit",
+        "repositoryURL": "https://github.com/SnapKit/SnapKit.git",
+        "state": {
+          "branch": null,
+          "revision": "d458564516e5676af9c70b4f4b2a9178294f1bc6",
+          "version": "5.0.1"
+        }
+      },
+      {
+        "package": "TableKit",
+        "repositoryURL": "https://github.com/maxsokolov/TableKit.git",
+        "state": {
+          "branch": null,
+          "revision": "8bf4840d9d0475a92352f02f368f88b74eced447",
+          "version": "2.11.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
