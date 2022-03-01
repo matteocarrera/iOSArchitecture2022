@@ -1,3 +1,3 @@
 struct Profile: Codable {
-    var login: String
+    var name: String
 }

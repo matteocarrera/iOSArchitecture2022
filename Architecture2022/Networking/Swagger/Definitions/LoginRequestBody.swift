@@ -1,4 +1,4 @@
-struct LoginCredentials: Codable {
+struct LoginRequestBody: Encodable {
     var login: String
     var password: String
 }

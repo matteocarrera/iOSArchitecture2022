@@ -9,21 +9,21 @@ final class AuthFlow {
     private var authService: AuthService
 
     @Weaver(.reference)
-    private var errorHandlingService: GlobalErrorHandlingService
+    private var userProfileService: UserProfileService
 
     init(injecting: AuthFlowDependencyResolver) {
         //
     }
 
     func start(on rootNavigation: UINavigationController, completion: @escaping ResultCompletion) {
-        if authService.isLoggedIn, let userProfile = authService.currentProfile {
+        if authService.isLoggedIn, let userProfile = userProfileService.currentProfile {
             debugPrint("Open main flow")
 
             completion(userProfile)
         } else {
             debugPrint("Open auth flow")
 
-            let loginView = LoginView(presenter: .init(authService: authService),
+            let loginView = LoginView(presenter: .init(userProfileService: userProfileService),
                                       output: .init(onLogin: { [weak self] in
                 self?.startLogin(with: $0, navigation: rootNavigation, completion: completion)
             }))
@@ -32,23 +32,23 @@ final class AuthFlow {
         }
     }
 
-    private func startLogin(with credentials: LoginCredentials,
+    private func startLogin(with credentials: LoginRequestBody,
                             navigation: UINavigationController,
                             completion: @escaping ResultCompletion) {
 
-        startCodeConfirm(navigation: navigation, completion: { [authService, errorHandlingService] in
-            Task {
-                do {
-                    let profile = try await authService.auth(login: credentials.login,
-                                                             password: credentials.password)
-                    debugPrint("Success auth with profile \(profile.login)")
+        Task {
+            let loginResponse = await authService.authorization(login: credentials.login,
+                                                                password: credentials.password)
+
+            if case .success = loginResponse, let profile = try? await userProfileService.profile().get() {
+                debugPrint("Success auth with profile \(profile.name)")
+                DispatchQueue.main.async {
                     completion(profile)
-                } catch {
-                    debugPrint("Auth failed")
-                    _ = await errorHandlingService.process(error)
                 }
+            } else {
+                debugPrint("Auth failed")
             }
-        })
+        }
     }
 
     private func startCodeConfirm(navigation: UINavigationController, completion: @escaping VoidClosure) {

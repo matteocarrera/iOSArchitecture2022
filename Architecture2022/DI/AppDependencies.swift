@@ -1,22 +1,47 @@
 import UIKit
+import KeychainAccess
+import LocalAuthentication
+import TIFoundationUtils
+
 final class AppDependencies {
     
     private let dependencies = MainDependencyContainer.appDependenciesDependencyResolver()
 
+    @Weaver(.registration, builder: DependencyFactory.makeLocalAuthenticationContext(_:))
+    var localAuthenticationContext: LAContext
+
+    @Weaver(.registration, builder: DependencyFactory.makeAppKeychainThisDeviceOnly)
+    var appKeychain: Keychain
+
     @Weaver(.registration)
-    var networkService: NetworkService
+    var dateFormattersReusePool: DateFormattersReusePool
+
+    @Weaver(.registration)
+    var jsonCodingService: JsonCodingService
+
+    @Weaver(.registration)
+    var tokenStorageService: TokenStorageService
+
+    @Weaver(.registration)
+    var projectNetworkService: ProjectNetworkService
+
+    @Weaver(.registration)
+    var userProfileService: UserProfileService
 
     @Weaver(.registration)
     var authService: AuthService
 
     @Weaver(.registration)
-    var refreshTokenService: RefreshTokenService
-
-    @Weaver(.registration, builder: AppDependencies.makeAlertHostViewController)
-    var alertHostViewController: UIViewController
+    var projectDateFormattingService: ProjectDateFormattingService
 
     @Weaver(.registration)
-    var globalErrorHandlingService: GlobalErrorHandlingService
+    var refreshTokenService: RefreshTokenService
+
+    @Weaver(.registration)
+    var displayAlertService: DisplayAlertService
+
+    @Weaver(.registration)
+    var errorHandlingRegistrationService: ErrorHandlingRegistrationService
 
     @Weaver(.registration)
     var authFlow: AuthFlow
@@ -24,17 +49,6 @@ final class AppDependencies {
     @Weaver(.registration)
     var applicationFlow: ApplicationFlow
 
-    static func makeAlertHostViewController(_ resolver: AlertHostViewControllerResolver) -> UIViewController {
-        let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as! SceneDelegate
-        let rootViewController = sceneDelegate.window?.rootViewController
-
-        guard let topViewController = rootViewController?.topVisibleViewController else {
-            assertionFailure("Unable to find top view controller of the app")
-            return UIViewController()
-        }
-
-        return topViewController
-    }
 }
 
 extension UIViewController {

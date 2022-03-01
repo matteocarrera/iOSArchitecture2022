@@ -1,7 +1,12 @@
 import Foundation
 import KeychainAccess
+import LocalAuthentication
+import Moya
 import SwiftUI
 import TIFoundationUtils
+import TIKeychainUtils
+import TIMoyaNetworking
+import TINetworking
 import TISwiftUtils
 import UIKit
 
@@ -119,8 +124,8 @@ final class MainDependencyContainer {
         case parameter
     }
 
-    var alertHostViewController: UIViewController {
-        return getBuilder(for: "alertHostViewController", type: UIViewController.self)(nil)
+    var appKeychain: Keychain {
+        return getBuilder(for: "appKeychain", type: Keychain.self)(nil)
     }
 
     var applicationFlow: ApplicationFlow {
@@ -135,20 +140,55 @@ final class MainDependencyContainer {
         return getBuilder(for: "authService", type: AuthService.self)(nil)
     }
 
-    var errorHandlingService: GlobalErrorHandlingService {
-        return getBuilder(for: "errorHandlingService", type: GlobalErrorHandlingService.self)(nil)
+    var dateFormattersReusePool: DateFormattersReusePool {
+        return getBuilder(for: "dateFormattersReusePool", type: DateFormattersReusePool.self)(nil)
     }
 
-    var globalErrorHandlingService: GlobalErrorHandlingService {
-        return getBuilder(for: "globalErrorHandlingService", type: GlobalErrorHandlingService.self)(nil)
+    var displayAlertService: DisplayAlertService {
+        return getBuilder(for: "displayAlertService", type: DisplayAlertService.self)(nil)
     }
 
-    var networkService: NetworkService {
-        return getBuilder(for: "networkService", type: NetworkService.self)(nil)
+    var errorHandlingRegistrationService: ErrorHandlingRegistrationService {
+        return getBuilder(
+            for: "errorHandlingRegistrationService",
+            type: ErrorHandlingRegistrationService.self
+        )(nil)
+    }
+
+    var jsonCodingService: JsonCodingService {
+        return getBuilder(for: "jsonCodingService", type: JsonCodingService.self)(nil)
+    }
+
+    var localAuthenticationContext: LAContext {
+        return getBuilder(for: "localAuthenticationContext", type: LAContext.self)(nil)
+    }
+
+    var networkService: ProjectNetworkService {
+        return getBuilder(for: "networkService", type: ProjectNetworkService.self)(nil)
+    }
+
+    var projectDateFormattingService: ProjectDateFormattingService {
+        return getBuilder(for: "projectDateFormattingService", type: ProjectDateFormattingService.self)(nil)
+    }
+
+    var projectNetworkService: ProjectNetworkService {
+        return getBuilder(for: "projectNetworkService", type: ProjectNetworkService.self)(nil)
     }
 
     var refreshTokenService: RefreshTokenService {
         return getBuilder(for: "refreshTokenService", type: RefreshTokenService.self)(nil)
+    }
+
+    var tokenStorage: TokenStorageService {
+        return getBuilder(for: "tokenStorage", type: TokenStorageService.self)(nil)
+    }
+
+    var tokenStorageService: TokenStorageService {
+        return getBuilder(for: "tokenStorageService", type: TokenStorageService.self)(nil)
+    }
+
+    var userProfileService: UserProfileService {
+        return getBuilder(for: "userProfileService", type: UserProfileService.self)(nil)
     }
 
     fileprivate init() {
@@ -156,7 +196,55 @@ final class MainDependencyContainer {
 
     private func appDependenciesDependencyResolver() -> AppDependenciesDependencyResolver {
         let _self = MainDependencyContainer()
-        _self.builders["networkService"] = lazyBuilder { (_: Optional<ParametersCopier>) -> NetworkService in return NetworkService() }
+        _self.builders["localAuthenticationContext"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> LAContext in
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            return DependencyFactory.makeLocalAuthenticationContext(_:)(_self as LAContextInputDependencyResolver)
+        }
+        _self.builders["appKeychain"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> Keychain in
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            return DependencyFactory.makeAppKeychainThisDeviceOnly(_self as KeychainInputDependencyResolver)
+        }
+        _self.builders["dateFormattersReusePool"] = lazyBuilder { (_: Optional<ParametersCopier>) -> DateFormattersReusePool in return DateFormattersReusePool() }
+        _self.builders["jsonCodingService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> JsonCodingService in
+            defer { MainDependencyContainer._dynamicResolversLock.unlock() }
+            MainDependencyContainer._dynamicResolversLock.lock()
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            let __self = _self.jsonCodingServiceDependencyResolver()
+            return JsonCodingService(injecting: __self)
+        }
+        _self.builders["tokenStorageService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> TokenStorageService in
+            defer { MainDependencyContainer._dynamicResolversLock.unlock() }
+            MainDependencyContainer._dynamicResolversLock.lock()
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            let __self = _self.tokenStorageServiceDependencyResolver()
+            return TokenStorageService(injecting: __self)
+        }
+        _self.builders["projectNetworkService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> ProjectNetworkService in
+            defer { MainDependencyContainer._dynamicResolversLock.unlock() }
+            MainDependencyContainer._dynamicResolversLock.lock()
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            let __self = _self.projectNetworkServiceDependencyResolver()
+            return ProjectNetworkService(injecting: __self)
+        }
+        _self.builders["userProfileService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> UserProfileService in
+            defer { MainDependencyContainer._dynamicResolversLock.unlock() }
+            MainDependencyContainer._dynamicResolversLock.lock()
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            let __self = _self.userProfileServiceDependencyResolver("AppDependencies")
+            return UserProfileService(injecting: __self)
+        }
         _self.builders["authService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> AuthService in
             defer { MainDependencyContainer._dynamicResolversLock.unlock() }
             MainDependencyContainer._dynamicResolversLock.lock()
@@ -165,6 +253,15 @@ final class MainDependencyContainer {
             }
             let __self = _self.authServiceDependencyResolver()
             return AuthService(injecting: __self)
+        }
+        _self.builders["projectDateFormattingService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> ProjectDateFormattingService in
+            defer { MainDependencyContainer._dynamicResolversLock.unlock() }
+            MainDependencyContainer._dynamicResolversLock.lock()
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            let __self = _self.projectDateFormattingServiceDependencyResolver()
+            return ProjectDateFormattingService(injecting: __self)
         }
         _self.builders["refreshTokenService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> RefreshTokenService in
             defer { MainDependencyContainer._dynamicResolversLock.unlock() }
@@ -175,20 +272,15 @@ final class MainDependencyContainer {
             let __self = _self.refreshTokenServiceDependencyResolver()
             return RefreshTokenService(injecting: __self)
         }
-        _self.builders["alertHostViewController"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> UIViewController in
-            guard let _self = _self else {
-                MainDependencyContainer.fatalError()
-            }
-            return AppDependencies.makeAlertHostViewController(_self as UIViewControllerInputDependencyResolver)
-        }
-        _self.builders["globalErrorHandlingService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> GlobalErrorHandlingService in
+        _self.builders["displayAlertService"] = lazyBuilder { (_: Optional<ParametersCopier>) -> DisplayAlertService in return DisplayAlertService() }
+        _self.builders["errorHandlingRegistrationService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> ErrorHandlingRegistrationService in
             defer { MainDependencyContainer._dynamicResolversLock.unlock() }
             MainDependencyContainer._dynamicResolversLock.lock()
             guard let _self = _self else {
                 MainDependencyContainer.fatalError()
             }
-            let __self = _self.globalErrorHandlingServiceDependencyResolver()
-            return GlobalErrorHandlingService(injecting: __self)
+            let __self = _self.errorHandlingRegistrationServiceDependencyResolver()
+            return ErrorHandlingRegistrationService(injecting: __self)
         }
         _self.builders["authFlow"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> AuthFlow in
             defer { MainDependencyContainer._dynamicResolversLock.unlock() }
@@ -208,20 +300,39 @@ final class MainDependencyContainer {
             let __self = _self.applicationFlowDependencyResolver()
             return ApplicationFlow(injecting: __self)
         }
-        _self.builders["errorHandlingService"] = _self.builder(_self.globalErrorHandlingService)
-        _self.builders["globalErrorHandlingService"] = _self.builder(_self.globalErrorHandlingService)
-        _ = _self.getBuilder(for: "networkService", type: NetworkService.self)(nil)
+        _self.builders["networkService"] = _self.builder(_self.projectNetworkService)
+        _self.builders["projectNetworkService"] = _self.builder(_self.projectNetworkService)
+        _self.builders["tokenStorage"] = _self.builder(_self.tokenStorageService)
+        _self.builders["tokenStorageService"] = _self.builder(_self.tokenStorageService)
+        _ = _self.getBuilder(for: "localAuthenticationContext", type: LAContext.self)(nil)
+        _ = _self.getBuilder(for: "appKeychain", type: Keychain.self)(nil)
+        _ = _self.getBuilder(for: "dateFormattersReusePool", type: DateFormattersReusePool.self)(nil)
+        _ = _self.getBuilder(for: "jsonCodingService", type: JsonCodingService.self)(nil)
+        _ = _self.getBuilder(for: "tokenStorageService", type: TokenStorageService.self)(nil)
+        _ = _self.getBuilder(for: "projectNetworkService", type: ProjectNetworkService.self)(nil)
+        _ = _self.getBuilder(for: "userProfileService", type: UserProfileService.self)(nil)
         _ = _self.getBuilder(for: "authService", type: AuthService.self)(nil)
+        _ = _self.getBuilder(for: "projectDateFormattingService", type: ProjectDateFormattingService.self)(nil)
         _ = _self.getBuilder(for: "refreshTokenService", type: RefreshTokenService.self)(nil)
-        _ = _self.getBuilder(for: "alertHostViewController", type: UIViewController.self)(nil)
-        _ = _self.getBuilder(for: "globalErrorHandlingService", type: GlobalErrorHandlingService.self)(nil)
+        _ = _self.getBuilder(for: "displayAlertService", type: DisplayAlertService.self)(nil)
+        _ = _self.getBuilder(
+            for: "errorHandlingRegistrationService",
+            type: ErrorHandlingRegistrationService.self
+        )(nil)
         _ = _self.getBuilder(for: "authFlow", type: AuthFlow.self)(nil)
         _ = _self.getBuilder(for: "applicationFlow", type: ApplicationFlow.self)(nil)
-        MainDependencyContainer._pushDynamicResolver({ _self.networkService })
+        MainDependencyContainer._pushDynamicResolver({ _self.localAuthenticationContext })
+        MainDependencyContainer._pushDynamicResolver({ _self.appKeychain })
+        MainDependencyContainer._pushDynamicResolver({ _self.dateFormattersReusePool })
+        MainDependencyContainer._pushDynamicResolver({ _self.jsonCodingService })
+        MainDependencyContainer._pushDynamicResolver({ _self.tokenStorageService })
+        MainDependencyContainer._pushDynamicResolver({ _self.projectNetworkService })
+        MainDependencyContainer._pushDynamicResolver({ _self.userProfileService })
         MainDependencyContainer._pushDynamicResolver({ _self.authService })
+        MainDependencyContainer._pushDynamicResolver({ _self.projectDateFormattingService })
         MainDependencyContainer._pushDynamicResolver({ _self.refreshTokenService })
-        MainDependencyContainer._pushDynamicResolver({ _self.alertHostViewController })
-        MainDependencyContainer._pushDynamicResolver({ _self.globalErrorHandlingService })
+        MainDependencyContainer._pushDynamicResolver({ _self.displayAlertService })
+        MainDependencyContainer._pushDynamicResolver({ _self.errorHandlingRegistrationService })
         MainDependencyContainer._pushDynamicResolver({ _self.authFlow })
         MainDependencyContainer._pushDynamicResolver({ _self.applicationFlow })
         return _self
@@ -232,39 +343,63 @@ final class MainDependencyContainer {
         return _self
     }
 
-    private func applicationFlowDependencyResolver() -> ApplicationFlowDependencyResolver {
-        let _self = MainDependencyContainer()
-        _self.builders["authFlow"] = _self.builder(authFlow)
-        MainDependencyContainer._pushDynamicResolver({ _self.authFlow })
-        return _self
-    }
-
-    private func authFlowDependencyResolver() -> AuthFlowDependencyResolver {
-        let _self = MainDependencyContainer()
-        _self.builders["authService"] = _self.builder(authService)
-        _self.builders["errorHandlingService"] = _self.builder(globalErrorHandlingService)
-        _self.builders["globalErrorHandlingService"] = _self.builder(globalErrorHandlingService)
-        MainDependencyContainer._pushDynamicResolver({ _self.authService })
-        MainDependencyContainer._pushDynamicResolver({ _self.errorHandlingService })
-        return _self
-    }
-
     fileprivate func previewDependenciesDependencyResolver() -> PreviewDependenciesDependencyResolver {
         let _self = MainDependencyContainer()
-        _self.builders["networkService"] = lazyBuilder { (_: Optional<ParametersCopier>) -> NetworkService in return NetworkService() }
-        _self.builders["authService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> AuthService in
+        _self.builders["dateFormattersReusePool"] = lazyBuilder { (_: Optional<ParametersCopier>) -> DateFormattersReusePool in return DateFormattersReusePool() }
+        _self.builders["jsonCodingService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> JsonCodingService in
             defer { MainDependencyContainer._dynamicResolversLock.unlock() }
             MainDependencyContainer._dynamicResolversLock.lock()
             guard let _self = _self else {
                 MainDependencyContainer.fatalError()
             }
-            let __self = _self.authServiceDependencyResolver()
-            return AuthService(injecting: __self)
+            let __self = _self.jsonCodingServiceDependencyResolver()
+            return JsonCodingService(injecting: __self)
         }
-        _ = _self.getBuilder(for: "networkService", type: NetworkService.self)(nil)
-        _ = _self.getBuilder(for: "authService", type: AuthService.self)(nil)
+        _self.builders["networkService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> ProjectNetworkService in
+            defer { MainDependencyContainer._dynamicResolversLock.unlock() }
+            MainDependencyContainer._dynamicResolversLock.lock()
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            let __self = _self.projectNetworkServiceDependencyResolver()
+            return ProjectNetworkService(injecting: __self)
+        }
+        _self.builders["appKeychain"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> Keychain in
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            return DependencyFactory.makeAppKeychainThisDeviceOnly(_self as KeychainInputDependencyResolver)
+        }
+        _self.builders["tokenStorageService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> TokenStorageService in
+            defer { MainDependencyContainer._dynamicResolversLock.unlock() }
+            MainDependencyContainer._dynamicResolversLock.lock()
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            let __self = _self.tokenStorageServiceDependencyResolver()
+            return TokenStorageService(injecting: __self)
+        }
+        _self.builders["userProfileService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> UserProfileService in
+            defer { MainDependencyContainer._dynamicResolversLock.unlock() }
+            MainDependencyContainer._dynamicResolversLock.lock()
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            let __self = _self.userProfileServiceDependencyResolver("PreviewDependencies")
+            return UserProfileService(injecting: __self)
+        }
+        _ = _self.getBuilder(for: "dateFormattersReusePool", type: DateFormattersReusePool.self)(nil)
+        _ = _self.getBuilder(for: "jsonCodingService", type: JsonCodingService.self)(nil)
+        _ = _self.getBuilder(for: "networkService", type: ProjectNetworkService.self)(nil)
+        _ = _self.getBuilder(for: "appKeychain", type: Keychain.self)(nil)
+        _ = _self.getBuilder(for: "tokenStorageService", type: TokenStorageService.self)(nil)
+        _ = _self.getBuilder(for: "userProfileService", type: UserProfileService.self)(nil)
+        MainDependencyContainer._pushDynamicResolver({ _self.dateFormattersReusePool })
+        MainDependencyContainer._pushDynamicResolver({ _self.jsonCodingService })
         MainDependencyContainer._pushDynamicResolver({ _self.networkService })
-        MainDependencyContainer._pushDynamicResolver({ _self.authService })
+        MainDependencyContainer._pushDynamicResolver({ _self.appKeychain })
+        MainDependencyContainer._pushDynamicResolver({ _self.tokenStorageService })
+        MainDependencyContainer._pushDynamicResolver({ _self.userProfileService })
         return _self
     }
 
@@ -273,19 +408,32 @@ final class MainDependencyContainer {
         return _self
     }
 
-    private func authServiceDependencyResolver() -> AuthServiceDependencyResolver {
+    private func applicationFlowDependencyResolver() -> ApplicationFlowDependencyResolver {
         let _self = MainDependencyContainer()
-        _self.builders["networkService"] = _self.builder(networkService)
-        MainDependencyContainer._pushDynamicResolver({ _self.networkService })
+        _self.builders["authFlow"] = _self.builder(authFlow)
+        _self.builders["errorHandlingRegistrationService"] = _self.builder(errorHandlingRegistrationService)
+        MainDependencyContainer._pushDynamicResolver({ _self.authFlow })
+        MainDependencyContainer._pushDynamicResolver({ _self.errorHandlingRegistrationService })
         return _self
     }
 
-    private func globalErrorHandlingServiceDependencyResolver() -> GlobalErrorHandlingServiceDependencyResolver {
+    private func authFlowDependencyResolver() -> AuthFlowDependencyResolver {
         let _self = MainDependencyContainer()
-        _self.builders["alertHostViewController"] = _self.builder(alertHostViewController)
-        _self.builders["refreshTokenService"] = _self.builder(refreshTokenService)
-        MainDependencyContainer._pushDynamicResolver({ _self.refreshTokenService })
-        MainDependencyContainer._pushDynamicResolver({ _self.alertHostViewController })
+        _self.builders["authService"] = _self.builder(authService)
+        _self.builders["userProfileService"] = _self.builder(userProfileService)
+        MainDependencyContainer._pushDynamicResolver({ _self.authService })
+        MainDependencyContainer._pushDynamicResolver({ _self.userProfileService })
+        return _self
+    }
+
+    private func authServiceDependencyResolver() -> AuthServiceDependencyResolver {
+        let _self = MainDependencyContainer()
+        _self.builders["networkService"] = _self.builder(projectNetworkService)
+        _self.builders["projectNetworkService"] = _self.builder(projectNetworkService)
+        _self.builders["tokenStorage"] = _self.builder(tokenStorageService)
+        _self.builders["tokenStorageService"] = _self.builder(tokenStorageService)
+        MainDependencyContainer._pushDynamicResolver({ _self.networkService })
+        MainDependencyContainer._pushDynamicResolver({ _self.tokenStorage })
         return _self
     }
 
@@ -295,11 +443,80 @@ final class MainDependencyContainer {
         MainDependencyContainer._pushDynamicResolver({ _self.authService })
         return _self
     }
+
+    private func errorHandlingRegistrationServiceDependencyResolver() -> ErrorHandlingRegistrationServiceDependencyResolver {
+        let _self = MainDependencyContainer()
+        _self.builders["refreshTokenService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> RefreshTokenService in
+            defer { MainDependencyContainer._dynamicResolversLock.unlock() }
+            MainDependencyContainer._dynamicResolversLock.lock()
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            let __self = _self.refreshTokenServiceDependencyResolver()
+            return RefreshTokenService(injecting: __self)
+        }
+        _self.builders["authService"] = _self.builder(authService)
+        _self.builders["displayAlertService"] = _self.builder(displayAlertService)
+        _self.builders["networkService"] = _self.builder(projectNetworkService)
+        _self.builders["projectNetworkService"] = _self.builder(projectNetworkService)
+        _ = _self.getBuilder(for: "refreshTokenService", type: RefreshTokenService.self)(nil)
+        MainDependencyContainer._pushDynamicResolver({ _self.networkService })
+        MainDependencyContainer._pushDynamicResolver({ _self.displayAlertService })
+        MainDependencyContainer._pushDynamicResolver({ _self.refreshTokenService })
+        return _self
+    }
+
+    private func jsonCodingServiceDependencyResolver() -> JsonCodingServiceDependencyResolver {
+        let _self = MainDependencyContainer()
+        _self.builders["dateFormattersReusePool"] = _self.builder(dateFormattersReusePool)
+        MainDependencyContainer._pushDynamicResolver({ _self.dateFormattersReusePool })
+        return _self
+    }
+
+    private func projectDateFormattingServiceDependencyResolver() -> ProjectDateFormattingServiceDependencyResolver {
+        let _self = MainDependencyContainer()
+        _self.builders["dateFormattersReusePool"] = _self.builder(dateFormattersReusePool)
+        MainDependencyContainer._pushDynamicResolver({ _self.dateFormattersReusePool })
+        return _self
+    }
+
+    private func projectNetworkServiceDependencyResolver() -> ProjectNetworkServiceDependencyResolver {
+        let _self = MainDependencyContainer()
+        _self.builders["jsonCodingService"] = _self.builder(jsonCodingService)
+        MainDependencyContainer._pushDynamicResolver({ _self.jsonCodingService })
+        return _self
+    }
+
+    private func tokenStorageServiceDependencyResolver() -> TokenStorageServiceDependencyResolver {
+        let _self = MainDependencyContainer()
+        _self.builders["appKeychain"] = _self.builder(appKeychain)
+        _self.builders["jsonCodingService"] = _self.builder(jsonCodingService)
+        MainDependencyContainer._pushDynamicResolver({ _self.appKeychain })
+        MainDependencyContainer._pushDynamicResolver({ _self.jsonCodingService })
+        return _self
+    }
+
+    private func userProfileServiceDependencyResolver(_ source: String) -> UserProfileServiceDependencyResolver {
+        let _self = MainDependencyContainer()
+        switch source {
+        case "AppDependencies":
+            _self.builders["networkService"] = _self.builder(projectNetworkService)
+            _self.builders["projectNetworkService"] = _self.builder(projectNetworkService)
+        case "PreviewDependencies":
+            _self.builders["networkService"] = _self.builder(networkService)
+        default:
+            MainDependencyContainer.fatalError()
+        }
+        _self.builders["tokenStorageService"] = _self.builder(tokenStorageService)
+        MainDependencyContainer._pushDynamicResolver({ _self.networkService })
+        MainDependencyContainer._pushDynamicResolver({ _self.tokenStorageService })
+        return _self
+    }
 }
 
 
-protocol AlertHostViewControllerResolver: AnyObject {
-    var alertHostViewController: UIViewController { get }
+protocol AppKeychainResolver: AnyObject {
+    var appKeychain: Keychain { get }
 }
 
 protocol ApplicationFlowResolver: AnyObject {
@@ -314,43 +531,87 @@ protocol AuthServiceResolver: AnyObject {
     var authService: AuthService { get }
 }
 
-protocol ErrorHandlingServiceResolver: AnyObject {
-    var errorHandlingService: GlobalErrorHandlingService { get }
+protocol DateFormattersReusePoolResolver: AnyObject {
+    var dateFormattersReusePool: DateFormattersReusePool { get }
 }
 
-protocol GlobalErrorHandlingServiceResolver: AnyObject {
-    var globalErrorHandlingService: GlobalErrorHandlingService { get }
+protocol DisplayAlertServiceResolver: AnyObject {
+    var displayAlertService: DisplayAlertService { get }
+}
+
+protocol ErrorHandlingRegistrationServiceResolver: AnyObject {
+    var errorHandlingRegistrationService: ErrorHandlingRegistrationService { get }
+}
+
+protocol JsonCodingServiceResolver: AnyObject {
+    var jsonCodingService: JsonCodingService { get }
+}
+
+protocol LocalAuthenticationContextResolver: AnyObject {
+    var localAuthenticationContext: LAContext { get }
 }
 
 protocol NetworkServiceResolver: AnyObject {
-    var networkService: NetworkService { get }
+    var networkService: ProjectNetworkService { get }
+}
+
+protocol ProjectDateFormattingServiceResolver: AnyObject {
+    var projectDateFormattingService: ProjectDateFormattingService { get }
+}
+
+protocol ProjectNetworkServiceResolver: AnyObject {
+    var projectNetworkService: ProjectNetworkService { get }
 }
 
 protocol RefreshTokenServiceResolver: AnyObject {
     var refreshTokenService: RefreshTokenService { get }
 }
 
-extension MainDependencyContainer: AlertHostViewControllerResolver, ApplicationFlowResolver, AuthFlowResolver, AuthServiceResolver, ErrorHandlingServiceResolver, GlobalErrorHandlingServiceResolver, NetworkServiceResolver, RefreshTokenServiceResolver {
+protocol TokenStorageResolver: AnyObject {
+    var tokenStorage: TokenStorageService { get }
+}
+
+protocol TokenStorageServiceResolver: AnyObject {
+    var tokenStorageService: TokenStorageService { get }
+}
+
+protocol UserProfileServiceResolver: AnyObject {
+    var userProfileService: UserProfileService { get }
+}
+
+extension MainDependencyContainer: AppKeychainResolver, ApplicationFlowResolver, AuthFlowResolver, AuthServiceResolver, DateFormattersReusePoolResolver, DisplayAlertServiceResolver, ErrorHandlingRegistrationServiceResolver, JsonCodingServiceResolver, LocalAuthenticationContextResolver, NetworkServiceResolver, ProjectDateFormattingServiceResolver, ProjectNetworkServiceResolver, RefreshTokenServiceResolver, TokenStorageResolver, TokenStorageServiceResolver, UserProfileServiceResolver {
 }
 
 extension MainDependencyContainer {
 }
 
-typealias AppDependenciesDependencyResolver = NetworkServiceResolver & AuthServiceResolver & RefreshTokenServiceResolver & AlertHostViewControllerResolver & GlobalErrorHandlingServiceResolver & AuthFlowResolver & ApplicationFlowResolver
+typealias AppDependenciesDependencyResolver = LocalAuthenticationContextResolver & AppKeychainResolver & DateFormattersReusePoolResolver & JsonCodingServiceResolver & TokenStorageServiceResolver & ProjectNetworkServiceResolver & UserProfileServiceResolver & AuthServiceResolver & ProjectDateFormattingServiceResolver & RefreshTokenServiceResolver & DisplayAlertServiceResolver & ErrorHandlingRegistrationServiceResolver & AuthFlowResolver & ApplicationFlowResolver
 
-typealias ApplicationFlowDependencyResolver = AuthFlowResolver
+typealias PreviewDependenciesDependencyResolver = DateFormattersReusePoolResolver & JsonCodingServiceResolver & NetworkServiceResolver & AppKeychainResolver & TokenStorageServiceResolver & UserProfileServiceResolver
 
-typealias AuthFlowDependencyResolver = AuthServiceResolver & ErrorHandlingServiceResolver
+typealias ApplicationFlowDependencyResolver = AuthFlowResolver & ErrorHandlingRegistrationServiceResolver
 
-typealias PreviewDependenciesDependencyResolver = NetworkServiceResolver & AuthServiceResolver
+typealias AuthFlowDependencyResolver = AuthServiceResolver & UserProfileServiceResolver
 
-typealias AuthServiceDependencyResolver = NetworkServiceResolver
-
-typealias GlobalErrorHandlingServiceDependencyResolver = RefreshTokenServiceResolver & AlertHostViewControllerResolver
+typealias AuthServiceDependencyResolver = NetworkServiceResolver & TokenStorageResolver
 
 typealias RefreshTokenServiceDependencyResolver = AuthServiceResolver
 
-typealias UIViewControllerInputDependencyResolver = AlertHostViewControllerResolver & ApplicationFlowResolver & AuthFlowResolver & AuthServiceResolver & GlobalErrorHandlingServiceResolver & NetworkServiceResolver & RefreshTokenServiceResolver
+typealias ErrorHandlingRegistrationServiceDependencyResolver = NetworkServiceResolver & DisplayAlertServiceResolver & RefreshTokenServiceResolver
+
+typealias JsonCodingServiceDependencyResolver = DateFormattersReusePoolResolver
+
+typealias ProjectDateFormattingServiceDependencyResolver = DateFormattersReusePoolResolver
+
+typealias ProjectNetworkServiceDependencyResolver = JsonCodingServiceResolver
+
+typealias TokenStorageServiceDependencyResolver = AppKeychainResolver & JsonCodingServiceResolver
+
+typealias UserProfileServiceDependencyResolver = NetworkServiceResolver & TokenStorageServiceResolver
+
+typealias KeychainInputDependencyResolver = AppKeychainResolver & DateFormattersReusePoolResolver & JsonCodingServiceResolver & TokenStorageServiceResolver & UserProfileServiceResolver
+
+typealias LAContextInputDependencyResolver = AppKeychainResolver & ApplicationFlowResolver & AuthFlowResolver & AuthServiceResolver & DateFormattersReusePoolResolver & DisplayAlertServiceResolver & ErrorHandlingRegistrationServiceResolver & JsonCodingServiceResolver & LocalAuthenticationContextResolver & ProjectDateFormattingServiceResolver & ProjectNetworkServiceResolver & RefreshTokenServiceResolver & TokenStorageServiceResolver & UserProfileServiceResolver
 
 @propertyWrapper
 struct Weaver<ConcreteType, AbstractType> {

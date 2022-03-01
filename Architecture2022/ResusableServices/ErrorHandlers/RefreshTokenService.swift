@@ -1,6 +1,7 @@
 import Foundation
+import TIMoyaNetworking
 
-final class RefreshTokenService: ChainedErrorHandler {
+final class RefreshTokenService: AsyncErrorHandler {
 
     @Weaver(.reference)
     var authService: AuthService
@@ -9,13 +10,15 @@ final class RefreshTokenService: ChainedErrorHandler {
         //
     }
 
-    func process(_ error: Error) async -> Bool {
-        switch error {
-        case let apiError as NetworkService.APIError where apiError == .tokenExpired:
-            do {
-                try await authService.renewToken()
+    func handle(_ error: ErrorResponse) async -> Bool {
+        switch error.errorCode {
+        case .invalidJwtToken,
+             .incorrectJwtTokenGiven:
+
+            switch await authService.refreshToken() {
+            case .success:
                 return true
-            } catch {
+            case .failure:
                 return false
             }
         default:

@@ -5,6 +5,9 @@ final class ApplicationFlow {
     @Weaver(.reference)
     private var authFlow: AuthFlow
 
+    @Weaver(.reference)
+    private var errorHandlingRegistrationService: ErrorHandlingRegistrationService
+
     private var window: UIWindow?
 
     private var rootNavigation: UINavigationController?
@@ -21,6 +24,8 @@ final class ApplicationFlow {
 
         window.setRootViewController(rootNavigation, animated: true)
         window.makeKeyAndVisible()
+
+        errorHandlingRegistrationService.registerUIHandlers(alertHostViewController: navigationController)
 
         authFlow.start(on: navigationController) { [weak self] in
             self?.startMainFlow(with: $0)

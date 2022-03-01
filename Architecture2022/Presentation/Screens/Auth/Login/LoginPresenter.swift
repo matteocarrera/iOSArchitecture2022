@@ -1,3 +1,3 @@
 struct LoginPresenter {
-    let authService: AuthService
+    let userProfileService: UserProfileService
 }

@@ -1,71 +1,55 @@
+import Moya
 import TISwiftUtils
-import TIFoundationUtils
-import KeychainAccess
+import TINetworking
+import Foundation
+import TIMoyaNetworking
 
-final class AuthService: ExternalService {
-    typealias ErrorType = AuthError
-
-    enum AuthError: Error {
-        case invalidCredentials
-        case missingRefreshToken
-    }
+final class AuthService {
+    @Weaver(.reference)
+    var networkService: ProjectNetworkService
 
     @Weaver(.reference)
-    private var networkService: NetworkService
+    var tokenStorage: TokenStorageService
 
-    @UserDefaultsBackingStore(store: .standard,
-                              getClosure: { $0.bool(forKey: "isLoggedIn") },
-                              setClosure: { $0.set($1, forKey: "isLoggedIn") })
-    private(set) var isLoggedIn: Bool
-
-    @BackingStore(store: Keychain.appKeychain(),
-                  getClosure: { $0["refreshToken"] },
-                  setClosure: { $0["refreshToken"] = $1 })
-    private(set) var refreshToken: String?
-
-    @BackingStore(store: Keychain.appKeychain(),
-                  getClosure: { $0["accessToken"] },
-                  setClosure: { $0["accessToken"] = $1 })
-    private(set) var accessToken: String?
-
-    @UserDefaultsCodableBackingStore(key: .profile,
-                                     codableKeyValueStorage: .standard)
-    private(set) var currentProfile: Profile?
+    var isLoggedIn: Bool {
+        tokenStorage.accessToken != nil && tokenStorage.refreshToken != nil
+    }
 
     init(injecting _: AuthServiceDependencyResolver) {
         //
-        isLoggedIn = false
     }
 
-    func auth(login: String, password: String) async throws -> Profile {
-        let loginResponse = try await networkService.auth(login: login, password: password)
-        
-        isLoggedIn = true
-        currentProfile = loginResponse.profile
+    func authorization(login: String,
+                       password: String) async -> ApiResponse<TokenResponse> {
 
-        storeTokens(from: loginResponse)
-        return loginResponse.profile
+        let body = LoginRequestBody(login: login, password: password)
+        let request: EndpointRequest = .apiV3MobileAuthLoginPassword(body: body)
+
+        return updateTokens(for: await networkService.process(recoverableRequest: request.staticRequestFactory()))
     }
 
-    func renewToken() async throws {
-        guard let refreshToken = refreshToken else {
-            throw AuthError.missingRefreshToken
+    func refreshToken() async -> ApiResponse<TokenResponse> {
+        guard let refreshToken = tokenStorage.refreshToken else {
+            return .failure(.localTokenMissing())
         }
 
-        let response = try await networkService
-            .renewToken(body: RefreshTokenBody(refreshToken: refreshToken))
+        let body = RenewTokenRequestBody(refreshToken: refreshToken.value)
+        let request: EndpointRequest = .apiV3MobileAuthTokensRenew(body: body)
 
-        storeTokens(from: response)
+        return updateTokens(for: await networkService.process(request: request))
     }
 
-    private func storeTokens(from response: LoginResponse) {
-        accessToken = response.accessToken
-        refreshToken = response.refreshToken
+    private func updateTokens(for result: ApiResponse<TokenResponse>) -> ApiResponse<TokenResponse> {
+        if case let .success(tokenResponse) = result {
+            tokenStorage.update(tokens: tokenResponse)
+        }
+
+        return result
     }
 }
 
-extension Keychain {
-    static func appKeychain() -> Keychain {
-        Keychain()
+private extension ErrorResponse {
+    static func localTokenMissing() -> Self {
+        .init(errorCode: .sessionNotRenewable, message: "Вы не авторизованы 😔")
     }
 }

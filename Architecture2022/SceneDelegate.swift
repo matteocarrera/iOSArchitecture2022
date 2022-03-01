@@ -15,6 +15,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let mainWindow = UIWindow(windowScene: windowScene)
         window = mainWindow
 
+        appDependencies.errorHandlingRegistrationService.registerInvisibleHandlers()
+
         appDependencies.applicationFlow.start(on: mainWindow)
     }
 

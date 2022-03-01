@@ -4,21 +4,21 @@ import TISwiftUtils
 struct LoginView: View {
 
     struct Output {
-        let onLogin: ParameterClosure<LoginCredentials>
+        let onLogin: ParameterClosure<LoginRequestBody>
     }
 
     let presenter: LoginPresenter
     let output: Output
 
-    @State var loginCredentials: LoginCredentials
+    @State var loginCredentials: LoginRequestBody
 
     init(presenter: LoginPresenter, output: Output) {
         self.presenter = presenter
         self.output = output
 
-        let login = presenter.authService.currentProfile?.login ?? .init()
+        let login = presenter.userProfileService.currentProfile?.name ?? .init()
 
-        loginCredentials = LoginCredentials(login: login, password: .init())
+        loginCredentials = LoginRequestBody(login: login, password: .init())
     }
 
     var body: some View {
@@ -36,7 +36,7 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView(presenter: .init(authService: PreviewDependencies().authService),
+        LoginView(presenter: .init(userProfileService: PreviewDependencies().userProfileService),
                   output: .init(onLogin: { _ in
             //
         }))
