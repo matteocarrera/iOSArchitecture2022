@@ -92,3 +92,12 @@ iOSInjectionProject/
 # Weaver
 
 .weaver_cache.json
+
+# Touch Instinct custom
+Downloads/
+fastlane/README.md
+Templates/
+cpd-output.xml
+*.swp
+*IDEWorkspaceChecks.plist
+swiftlint_files

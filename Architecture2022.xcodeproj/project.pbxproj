@@ -401,6 +401,7 @@
 				6746F494277DAE0D0060BA5E /* Sources */,
 				6746F495277DAE0D0060BA5E /* Frameworks */,
 				6746F496277DAE0D0060BA5E /* Resources */,
+				676F9D4B27DA21AB00F9768B /* OpenAPI generator */,
 			);
 			buildRules = (
 			);
@@ -513,6 +514,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "${PODS_ROOT}/WeaverDI/weaver/bin/weaver swift --project-path $PROJECT_DIR/$PROJECT_NAME --main-output-path $TARGET_NAME/Generated/Weaver.swift\n";
+		};
+		676F9D4B27DA21AB00F9768B /* OpenAPI generator */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "OpenAPI generator";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "API_SPEC_DIR=SwaggerApiSpec\nAPI_NAME=PetshopAPI\n\n. build-scripts/xcode/build_phases/api_generator.sh 1.0.0 ${TARGET_NAME}/Generated\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
