@@ -1,0 +1,23 @@
+openapi: 3.0.0
+servers:
+  - url: https://petshop-mock.dev.touchin.ru
+    description: Sandbox server
+info:
+  version: 1.0.0
+  title: Swagger Petshop
+paths:
+  # Auth
+  /api/v3/mobile/auth/login/password/:
+    $ref: "./paths/auth/LoginPasswordRequest.yaml"
+  /api/v3/mobile/auth/tokens/renew/:
+    $ref: "./paths/auth/TokensRenewRequest.yaml"
+  # Profile
+  /api/v3/mobile/profile/:
+    $ref: "./paths/auth/ProfileRequest.yaml"
+
+components:
+  securitySchemes:
+    AccessTokenAuth:
+      type: apiKey
+      in: header
+      name: X-Bearer-Token

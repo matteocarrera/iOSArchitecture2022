@@ -1,0 +1,9 @@
+title: TokensRenewRequest
+description: Тело запроса на обновление access и refresh токенов
+type: object
+properties:
+  refreshToken:
+    type: string
+    description: Refresh token клиента
+required:
+  - refreshToken

@@ -1,0 +1,13 @@
+title: ErrorResponse
+description: "Ответ с текстом и кодом ошибки"
+type: object
+properties:
+  errorCode:
+    description: "Код ошибки"
+    type: string
+  message:
+    description: "Текст сообщения об ошибке"
+    type: string
+required:
+  - errorCode
+  - message

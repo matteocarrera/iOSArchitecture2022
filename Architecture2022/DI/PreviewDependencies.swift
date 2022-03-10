@@ -10,16 +10,19 @@ final class PreviewDependencies {
     var dateFormattersReusePool: DateFormattersReusePool
 
     @Weaver(.registration)
-    var jsonCodingService: JsonCodingService
+    var iso8601DateFormattersReusePool: ISO8601DateFormattersReusePool
+
+    @Weaver(.registration)
+    var projectJsonCodingConfigurator: ProjectJsonCodingConfigurator
+
+    @Weaver(.registration)
+    var tokenStorageService: TokenStorageService
 
     @Weaver(.registration)
     var networkService: ProjectNetworkService
 
     @Weaver(.registration, builder: DependencyFactory.makeAppKeychainThisDeviceOnly)
     var appKeychain: Keychain
-
-    @Weaver(.registration)
-    var tokenStorageService: TokenStorageService
 
     @Weaver(.registration)
     var userProfileService: UserProfileService

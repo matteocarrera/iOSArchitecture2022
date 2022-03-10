@@ -1,0 +1,37 @@
+post:
+  operationId: TokenRenewRequest
+  tags:
+    - auth
+  summary: Запрос на обновление access и refresh токенов
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../requestBodies/auth/TokensRenewRequestBody.yaml"  
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/TokensResponse.yaml"
+    '400':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"
+    '403':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"
+    '404':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"
+    '500':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"

@@ -4,13 +4,13 @@ import TISwiftUtils
 struct LoginView: View {
 
     struct Output {
-        let onLogin: ParameterClosure<LoginRequestBody>
+        let onLogin: ParameterClosure<LoginPasswordRequestBody>
     }
 
     let presenter: LoginPresenter
     let output: Output
 
-    @State var loginCredentials: LoginRequestBody
+    @State var loginCredentials: LoginPasswordRequestBody
 
     init(presenter: LoginPresenter, output: Output) {
         self.presenter = presenter
@@ -18,7 +18,7 @@ struct LoginView: View {
 
         let login = presenter.userProfileService.currentProfile?.name ?? .init()
 
-        loginCredentials = LoginRequestBody(login: login, password: .init())
+        loginCredentials = LoginPasswordRequestBody(login: login, password: .init())
     }
 
     var body: some View {

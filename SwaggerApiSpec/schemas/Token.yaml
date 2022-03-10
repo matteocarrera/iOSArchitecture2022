@@ -1,0 +1,27 @@
+title: Token
+description: "Авторизационный токен"
+type: object
+properties:
+  name:
+    description: "Тип токена"
+    type: string
+  value:
+    description: "Значение токена"
+    type: string
+  isoDateExpiration:
+    description: "Дата окончания действия токена"
+    type: string
+    format: date
+  isoDateTimeExpiration:
+    description: "Дата окончания действия токена"
+    type: string
+    format: date-time
+  expiration:
+    description: "Дата окончания действия токена"
+    type: string
+    format: date-time
+    x-custom-date-format: "yyyy-MM-dd'T'HH:mm:ss.SZ"
+required:
+  - name
+  - value
+  - expiration

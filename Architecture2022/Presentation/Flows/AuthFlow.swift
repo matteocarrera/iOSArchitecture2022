@@ -3,7 +3,7 @@ import TISwiftUtils
 
 final class AuthFlow {
 
-    typealias ResultCompletion = ParameterClosure<Profile>
+    typealias ResultCompletion = ParameterClosure<ProfileResponse>
 
     @Weaver(.reference)
     private var authService: AuthService
@@ -32,7 +32,7 @@ final class AuthFlow {
         }
     }
 
-    private func startLogin(with credentials: LoginRequestBody,
+    private func startLogin(with credentials: LoginPasswordRequestBody,
                             navigation: UINavigationController,
                             completion: @escaping ResultCompletion) {
 

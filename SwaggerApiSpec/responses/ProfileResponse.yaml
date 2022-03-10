@@ -1,0 +1,9 @@
+title: ProfileResponse
+description: "Профиль пользователя"
+type: object
+properties:
+  name:
+    type: string
+    description: "Имя пользователя"
+required:
+  - name

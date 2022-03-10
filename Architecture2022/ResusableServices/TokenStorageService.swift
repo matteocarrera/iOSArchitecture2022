@@ -9,7 +9,7 @@ final class TokenStorageService {
     private var appKeychain: Keychain
 
     @Weaver(.reference)
-    var jsonCodingService: JsonCodingService
+    private var jsonCodingConfigurator: ProjectJsonCodingConfigurator
 
     private let keyValueEncoder: JSONKeyValueEncoder
     private let keyValueDecoder: JSONKeyValueDecoder
@@ -36,11 +36,11 @@ final class TokenStorageService {
     }
 
     init(injecting resolver: TokenStorageServiceDependencyResolver) {
-        keyValueEncoder = JSONKeyValueEncoder(jsonEncoder: resolver.jsonCodingService.jsonEncoder)
-        keyValueDecoder = JSONKeyValueDecoder(jsonDecoder: resolver.jsonCodingService.jsonDecoder)
+        keyValueEncoder = JSONKeyValueEncoder(jsonEncoder: resolver.jsonCodingConfigurator.jsonEncoder)
+        keyValueDecoder = JSONKeyValueDecoder(jsonDecoder: resolver.jsonCodingConfigurator.jsonDecoder)
     }
 
-    func update(tokens: TokenResponse) {
+    func update(tokens: TokensResponse) {
         accessToken = tokens.accessToken
         refreshToken = tokens.refreshToken
     }

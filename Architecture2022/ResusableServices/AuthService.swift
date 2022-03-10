@@ -20,26 +20,25 @@ final class AuthService {
     }
 
     func authorization(login: String,
-                       password: String) async -> ApiResponse<TokenResponse> {
+                       password: String) async -> ApiResponse<TokensResponse> {
 
-        let body = LoginRequestBody(login: login, password: password)
-        let request: EndpointRequest = .apiV3MobileAuthLoginPassword(body: body)
+        let body = LoginPasswordRequestBody(login: login, password: password)
 
-        return updateTokens(for: await networkService.process(recoverableRequest: request.staticRequestFactory()))
+        return updateTokens(for: await networkService.process(request: .loginPasswordRequest(body: body)))
     }
 
-    func refreshToken() async -> ApiResponse<TokenResponse> {
+    func refreshToken() async -> ApiResponse<TokensResponse> {
         guard let refreshToken = tokenStorage.refreshToken else {
             return .failure(.localTokenMissing())
         }
 
-        let body = RenewTokenRequestBody(refreshToken: refreshToken.value)
-        let request: EndpointRequest = .apiV3MobileAuthTokensRenew(body: body)
+        let body = TokensRenewRequestBody(refreshToken: refreshToken.value)
+        let request: EndpointRequest = .tokenRenewRequest(body: body)
 
         return updateTokens(for: await networkService.process(request: request))
     }
 
-    private func updateTokens(for result: ApiResponse<TokenResponse>) -> ApiResponse<TokenResponse> {
+    private func updateTokens(for result: ApiResponse<TokensResponse>) -> ApiResponse<TokensResponse> {
         if case let .success(tokenResponse) = result {
             tokenStorage.update(tokens: tokenResponse)
         }

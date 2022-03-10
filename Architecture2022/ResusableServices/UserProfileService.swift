@@ -10,14 +10,14 @@ final class UserProfileService {
 
     @UserDefaultsCodableBackingStore(key: .profile,
                                      codableKeyValueStorage: .standard)
-    private(set) var currentProfile: Profile?
+    private(set) var currentProfile: ProfileResponse?
 
     init(injecting _: UserProfileServiceDependencyResolver) {
         //
     }
 
-    func profile() async -> ApiResponse<Profile> {
-        let result: ApiResponse<Profile> = await networkService.process(recoverableRequest: ProfileRequestFactory(tokenStorageService: tokenStorageService))
+    func profile() async -> ApiResponse<ProfileResponse> {
+        let result = await networkService.process(request: .profileRequest())
 
         if case let .success(profile) = result {
             currentProfile = profile

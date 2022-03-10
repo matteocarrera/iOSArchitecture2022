@@ -17,7 +17,10 @@ final class AppDependencies {
     var dateFormattersReusePool: DateFormattersReusePool
 
     @Weaver(.registration)
-    var jsonCodingService: JsonCodingService
+    var iso8601DateFormattersReusePool: ISO8601DateFormattersReusePool
+
+    @Weaver(.registration)
+    var projectJsonCodingConfigurator: ProjectJsonCodingConfigurator
 
     @Weaver(.registration)
     var tokenStorageService: TokenStorageService

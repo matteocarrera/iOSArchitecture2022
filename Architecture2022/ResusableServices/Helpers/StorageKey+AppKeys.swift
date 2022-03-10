@@ -1,7 +1,7 @@
 import TIFoundationUtils
 
 extension StorageKey {
-    static var profile: StorageKey<Profile> {
+    static var profile: StorageKey<ProfileResponse> {
         .init(rawValue: "profile")
     }
 

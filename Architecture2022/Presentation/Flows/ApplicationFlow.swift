@@ -32,7 +32,7 @@ final class ApplicationFlow {
         }
     }
 
-    private func startMainFlow(with profile: Profile) {
+    private func startMainFlow(with profile: ProfileResponse) {
         let mainController = UIViewController()
         rootNavigation?.setViewControllers([mainController], animated: true)
     }
