@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import TIFoundationUtils
 
 
 /** Тело запроса на вход по логину и паролю */
 
-public struct LoginPasswordRequestBody: Codable {
+public struct LoginPasswordRequestBody: Codable, Equatable {
 
     /** Логин */
     public var login: String
@@ -39,6 +40,5 @@ public struct LoginPasswordRequestBody: Codable {
         try container.encode(login, forKey: .login)
         try container.encode(password, forKey: .password)
     }
-
 
 }

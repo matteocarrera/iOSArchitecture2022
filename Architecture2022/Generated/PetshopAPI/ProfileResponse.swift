@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import TIFoundationUtils
 
 
 /** Профиль пользователя */
 
-public struct ProfileResponse: Codable {
+public struct ProfileResponse: Codable, Equatable {
 
     /** Имя пользователя */
     public var name: String
@@ -33,6 +34,5 @@ public struct ProfileResponse: Codable {
 
         try container.encode(name, forKey: .name)
     }
-
 
 }

@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import TIFoundationUtils
 
 
 /** Ответ с текстом и кодом ошибки */
 
-public struct ErrorResponse: Codable {
+public struct ErrorResponse: Codable, Equatable {
 
     /** Код ошибки */
     public var errorCode: String
@@ -39,6 +40,5 @@ public struct ErrorResponse: Codable {
         try container.encode(errorCode, forKey: .errorCode)
         try container.encode(message, forKey: .message)
     }
-
 
 }

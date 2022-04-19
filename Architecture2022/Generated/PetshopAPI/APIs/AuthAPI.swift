@@ -16,10 +16,11 @@ public extension EndpointRequest {
      */
     static func loginPasswordRequest(body: LoginPasswordRequestBody, server: Server? = nil) -> EndpointRequest<LoginPasswordRequestBody, TokensResponse> {
         .init(templatePath: "/api/v3/mobile/auth/login/password/",
-                      method: .init(rawValue: "POST"),
-                      body: body,
-                      acceptableStatusCodes: [200, 400, 403, 500],
-                      server: server)
+              method: .init(rawValue: "POST"),
+              body: body,
+              headerParameters: nil,
+              acceptableStatusCodes: [200, 400, 403, 500],
+              server: server)
     }
     /**
      Запрос на обновление access и refresh токенов
@@ -28,9 +29,10 @@ public extension EndpointRequest {
      */
     static func tokenRenewRequest(body: TokensRenewRequestBody, server: Server? = nil) -> EndpointRequest<TokensRenewRequestBody, TokensResponse> {
         .init(templatePath: "/api/v3/mobile/auth/tokens/renew/",
-                      method: .init(rawValue: "POST"),
-                      body: body,
-                      acceptableStatusCodes: [200, 400, 403, 404, 500],
-                      server: server)
+              method: .init(rawValue: "POST"),
+              body: body,
+              headerParameters: nil,
+              acceptableStatusCodes: [200, 400, 403, 404, 500],
+              server: server)
     }
 }

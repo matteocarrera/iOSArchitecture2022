@@ -3,20 +3,7 @@ description: "Авторизационные токены"
 type: object
 properties:
   accessToken:
-    title: Token
-    description: "Авторизационный токен"
-    type: object
-    properties:
-      value:
-        description: "Значение токена"
-        type: string
-      expiration:
-        description: "Дата окончания действия токена"
-        type: string
-        format: date-time
-    required:
-      - value
-      - expiration
+    $ref: "../schemas/Token.yaml"
   refreshToken:
     $ref: "../schemas/Token.yaml"
 required:

@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "Cache",
+        "repositoryURL": "https://github.com/hyperoslo/Cache.git",
+        "state": {
+          "branch": null,
+          "revision": "c7f4d633049c3bd649a353bad36f6c17e9df085f",
+          "version": "6.0.0"
+        }
+      },
+      {
         "package": "Cursors",
         "repositoryURL": "https://github.com/petropavel13/Cursors",
         "state": {
@@ -33,8 +42,8 @@
         "repositoryURL": "https://github.com/TouchInstinct/LeadKit",
         "state": {
           "branch": null,
-          "revision": "1c38c41507198274fc23bc9c1e7b60837151d2c0",
-          "version": "1.11.0"
+          "revision": "70c4b4e00dd59fd3577be613bc66374f1622958b",
+          "version": "1.15.0"
         }
       },
       {

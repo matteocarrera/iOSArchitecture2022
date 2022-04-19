@@ -8,14 +8,14 @@ properties:
   value:
     description: "Значение токена"
     type: string
-  isoDateExpiration:
-    description: "Дата окончания действия токена"
-    type: string
-    format: date
-  isoDateTimeExpiration:
-    description: "Дата окончания действия токена"
-    type: string
-    format: date-time
+  # isoDateExpiration:
+  #   description: "Дата окончания действия токена"
+  #   type: string
+  #   format: date
+  # isoDateTimeExpiration:
+  #   description: "Дата окончания действия токена"
+  #   type: string
+  #   format: date-time
   expiration:
     description: "Дата окончания действия токена"
     type: string

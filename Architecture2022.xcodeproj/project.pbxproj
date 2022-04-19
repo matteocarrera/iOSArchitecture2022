@@ -46,19 +46,19 @@
 		6756343E278F1EFB000EE920 /* CodeConfirmPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6756343D278F1EFB000EE920 /* CodeConfirmPresenter.swift */; };
 		67563440278F21EB000EE920 /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6756343F278F21EB000EE920 /* Presenter.swift */; };
 		67563442278F2710000EE920 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67563441278F270F000EE920 /* LoginPresenter.swift */; };
-		676F9D4027D9E27200F9768B /* TokensRenewRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676F9D3427D9E27200F9768B /* TokensRenewRequestBody.swift */; };
-		676F9D4127D9E27200F9768B /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676F9D3627D9E27200F9768B /* AuthAPI.swift */; };
-		676F9D4227D9E27200F9768B /* ProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676F9D3727D9E27200F9768B /* ProfileAPI.swift */; };
-		676F9D4327D9E27200F9768B /* APIDateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676F9D3827D9E27200F9768B /* APIDateFormat.swift */; };
-		676F9D4427D9E27200F9768B /* TokensResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676F9D3927D9E27200F9768B /* TokensResponse.swift */; };
-		676F9D4527D9E27200F9768B /* Plugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676F9D3A27D9E27200F9768B /* Plugins.swift */; };
-		676F9D4627D9E27200F9768B /* LoginPasswordRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676F9D3B27D9E27200F9768B /* LoginPasswordRequestBody.swift */; };
-		676F9D4727D9E27200F9768B /* PetshopAPI+Servers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676F9D3C27D9E27200F9768B /* PetshopAPI+Servers.swift */; };
-		676F9D4827D9E27200F9768B /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676F9D3D27D9E27200F9768B /* ErrorResponse.swift */; };
-		676F9D4927D9E27200F9768B /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676F9D3E27D9E27200F9768B /* Token.swift */; };
-		676F9D4A27D9E27200F9768B /* ProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 676F9D3F27D9E27200F9768B /* ProfileResponse.swift */; };
 		6771854C27BF80770015F2FF /* UserProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6771854B27BF80770015F2FF /* UserProfileService.swift */; };
 		6771855427BF92CC0015F2FF /* DependencyFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6771855327BF92CC0015F2FF /* DependencyFactory.swift */; };
+		678A431E280F05E900E8CA00 /* TokensRenewRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678A4312280F05E900E8CA00 /* TokensRenewRequestBody.swift */; };
+		678A431F280F05E900E8CA00 /* AuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678A4314280F05E900E8CA00 /* AuthAPI.swift */; };
+		678A4320280F05E900E8CA00 /* ProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678A4315280F05E900E8CA00 /* ProfileAPI.swift */; };
+		678A4321280F05E900E8CA00 /* APIDateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678A4316280F05E900E8CA00 /* APIDateFormat.swift */; };
+		678A4322280F05E900E8CA00 /* TokensResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678A4317280F05E900E8CA00 /* TokensResponse.swift */; };
+		678A4323280F05E900E8CA00 /* Plugins.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678A4318280F05E900E8CA00 /* Plugins.swift */; };
+		678A4324280F05E900E8CA00 /* LoginPasswordRequestBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678A4319280F05E900E8CA00 /* LoginPasswordRequestBody.swift */; };
+		678A4325280F05E900E8CA00 /* PetshopAPI+Servers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678A431A280F05E900E8CA00 /* PetshopAPI+Servers.swift */; };
+		678A4326280F05E900E8CA00 /* ErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678A431B280F05E900E8CA00 /* ErrorResponse.swift */; };
+		678A4327280F05E900E8CA00 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678A431C280F05E900E8CA00 /* Token.swift */; };
+		678A4328280F05E900E8CA00 /* ProfileResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 678A431D280F05E900E8CA00 /* ProfileResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,19 +91,19 @@
 		6756343D278F1EFB000EE920 /* CodeConfirmPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeConfirmPresenter.swift; sourceTree = "<group>"; };
 		6756343F278F21EB000EE920 /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
 		67563441278F270F000EE920 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
-		676F9D3427D9E27200F9768B /* TokensRenewRequestBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensRenewRequestBody.swift; sourceTree = "<group>"; };
-		676F9D3627D9E27200F9768B /* AuthAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
-		676F9D3727D9E27200F9768B /* ProfileAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileAPI.swift; sourceTree = "<group>"; };
-		676F9D3827D9E27200F9768B /* APIDateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIDateFormat.swift; sourceTree = "<group>"; };
-		676F9D3927D9E27200F9768B /* TokensResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensResponse.swift; sourceTree = "<group>"; };
-		676F9D3A27D9E27200F9768B /* Plugins.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plugins.swift; sourceTree = "<group>"; };
-		676F9D3B27D9E27200F9768B /* LoginPasswordRequestBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPasswordRequestBody.swift; sourceTree = "<group>"; };
-		676F9D3C27D9E27200F9768B /* PetshopAPI+Servers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PetshopAPI+Servers.swift"; sourceTree = "<group>"; };
-		676F9D3D27D9E27200F9768B /* ErrorResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
-		676F9D3E27D9E27200F9768B /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
-		676F9D3F27D9E27200F9768B /* ProfileResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileResponse.swift; sourceTree = "<group>"; };
 		6771854B27BF80770015F2FF /* UserProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileService.swift; sourceTree = "<group>"; };
 		6771855327BF92CC0015F2FF /* DependencyFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyFactory.swift; sourceTree = "<group>"; };
+		678A4312280F05E900E8CA00 /* TokensRenewRequestBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensRenewRequestBody.swift; sourceTree = "<group>"; };
+		678A4314280F05E900E8CA00 /* AuthAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthAPI.swift; sourceTree = "<group>"; };
+		678A4315280F05E900E8CA00 /* ProfileAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileAPI.swift; sourceTree = "<group>"; };
+		678A4316280F05E900E8CA00 /* APIDateFormat.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIDateFormat.swift; sourceTree = "<group>"; };
+		678A4317280F05E900E8CA00 /* TokensResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokensResponse.swift; sourceTree = "<group>"; };
+		678A4318280F05E900E8CA00 /* Plugins.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Plugins.swift; sourceTree = "<group>"; };
+		678A4319280F05E900E8CA00 /* LoginPasswordRequestBody.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPasswordRequestBody.swift; sourceTree = "<group>"; };
+		678A431A280F05E900E8CA00 /* PetshopAPI+Servers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PetshopAPI+Servers.swift"; sourceTree = "<group>"; };
+		678A431B280F05E900E8CA00 /* ErrorResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorResponse.swift; sourceTree = "<group>"; };
+		678A431C280F05E900E8CA00 /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		678A431D280F05E900E8CA00 /* ProfileResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileResponse.swift; sourceTree = "<group>"; };
 		7463718C013B989BD8688D64 /* Pods_Architecture2022.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Architecture2022.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		969E717B88E1F823172B9E57 /* Pods-Architecture2022.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Architecture2022.release.xcconfig"; path = "Target Support Files/Pods-Architecture2022/Pods-Architecture2022.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -208,7 +208,7 @@
 		6746F4CD277DC40B0060BA5E /* Generated */ = {
 			isa = PBXGroup;
 			children = (
-				676F9D3127D9E27200F9768B /* PetshopAPI */,
+				678A4311280F05E900E8CA00 /* PetshopAPI */,
 				6746F4CE277DC40B0060BA5E /* Weaver.swift */,
 			);
 			path = Generated;
@@ -320,48 +320,6 @@
 			path = CodeConfirm;
 			sourceTree = "<group>";
 		};
-		676F9D3127D9E27200F9768B /* PetshopAPI */ = {
-			isa = PBXGroup;
-			children = (
-				676F9D3227D9E27200F9768B /* Classes */,
-			);
-			path = PetshopAPI;
-			sourceTree = "<group>";
-		};
-		676F9D3227D9E27200F9768B /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				676F9D3327D9E27200F9768B /* Swaggers */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		676F9D3327D9E27200F9768B /* Swaggers */ = {
-			isa = PBXGroup;
-			children = (
-				676F9D3427D9E27200F9768B /* TokensRenewRequestBody.swift */,
-				676F9D3527D9E27200F9768B /* APIs */,
-				676F9D3827D9E27200F9768B /* APIDateFormat.swift */,
-				676F9D3927D9E27200F9768B /* TokensResponse.swift */,
-				676F9D3A27D9E27200F9768B /* Plugins.swift */,
-				676F9D3B27D9E27200F9768B /* LoginPasswordRequestBody.swift */,
-				676F9D3C27D9E27200F9768B /* PetshopAPI+Servers.swift */,
-				676F9D3D27D9E27200F9768B /* ErrorResponse.swift */,
-				676F9D3E27D9E27200F9768B /* Token.swift */,
-				676F9D3F27D9E27200F9768B /* ProfileResponse.swift */,
-			);
-			path = Swaggers;
-			sourceTree = "<group>";
-		};
-		676F9D3527D9E27200F9768B /* APIs */ = {
-			isa = PBXGroup;
-			children = (
-				676F9D3627D9E27200F9768B /* AuthAPI.swift */,
-				676F9D3727D9E27200F9768B /* ProfileAPI.swift */,
-			);
-			path = APIs;
-			sourceTree = "<group>";
-		};
 		6771855527BF92D30015F2FF /* DI */ = {
 			isa = PBXGroup;
 			children = (
@@ -370,6 +328,32 @@
 				6771855327BF92CC0015F2FF /* DependencyFactory.swift */,
 			);
 			path = DI;
+			sourceTree = "<group>";
+		};
+		678A4311280F05E900E8CA00 /* PetshopAPI */ = {
+			isa = PBXGroup;
+			children = (
+				678A4312280F05E900E8CA00 /* TokensRenewRequestBody.swift */,
+				678A4313280F05E900E8CA00 /* APIs */,
+				678A4316280F05E900E8CA00 /* APIDateFormat.swift */,
+				678A4317280F05E900E8CA00 /* TokensResponse.swift */,
+				678A4318280F05E900E8CA00 /* Plugins.swift */,
+				678A4319280F05E900E8CA00 /* LoginPasswordRequestBody.swift */,
+				678A431A280F05E900E8CA00 /* PetshopAPI+Servers.swift */,
+				678A431B280F05E900E8CA00 /* ErrorResponse.swift */,
+				678A431C280F05E900E8CA00 /* Token.swift */,
+				678A431D280F05E900E8CA00 /* ProfileResponse.swift */,
+			);
+			path = PetshopAPI;
+			sourceTree = "<group>";
+		};
+		678A4313280F05E900E8CA00 /* APIs */ = {
+			isa = PBXGroup;
+			children = (
+				678A4314280F05E900E8CA00 /* AuthAPI.swift */,
+				678A4315280F05E900E8CA00 /* ProfileAPI.swift */,
+			);
+			path = APIs;
 			sourceTree = "<group>";
 		};
 		9E737E257C8978E4A9B76212 /* Pods */ = {
@@ -398,10 +382,10 @@
 			buildPhases = (
 				084B394ABAFB445CFC1AA05E /* [CP] Check Pods Manifest.lock */,
 				6746F4CC277DC0A40060BA5E /* Weawer */,
+				676F9D4B27DA21AB00F9768B /* OpenAPI generator */,
 				6746F494277DAE0D0060BA5E /* Sources */,
 				6746F495277DAE0D0060BA5E /* Frameworks */,
 				6746F496277DAE0D0060BA5E /* Resources */,
-				676F9D4B27DA21AB00F9768B /* OpenAPI generator */,
 			);
 			buildRules = (
 			);
@@ -531,7 +515,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "API_SPEC_DIR=SwaggerApiSpec\nAPI_NAME=PetshopAPI\n\n. build-scripts/xcode/build_phases/api_generator.sh 1.0.0 ${TARGET_NAME}/Generated\n";
+			shellScript = "API_SPEC_DIR=SwaggerApiSpec\nAPI_NAME=PetshopAPI\nFORCE_RUN=1\n\n. build-scripts/xcode/build_phases/api_generator.sh 1.1.7 ${TARGET_NAME}/Generated\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -540,13 +524,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				676F9D4627D9E27200F9768B /* LoginPasswordRequestBody.swift in Sources */,
 				6746F4C2277DB0ED0060BA5E /* ApplicationFlow.swift in Sources */,
+				678A4324280F05E900E8CA00 /* LoginPasswordRequestBody.swift in Sources */,
 				67563433278F1819000EE920 /* StorageKey+AppKeys.swift in Sources */,
 				6756343E278F1EFB000EE920 /* CodeConfirmPresenter.swift in Sources */,
-				676F9D4027D9E27200F9768B /* TokensRenewRequestBody.swift in Sources */,
 				6746F4C4277DB2E80060BA5E /* UIWindow+Transition.swift in Sources */,
-				676F9D4527D9E27200F9768B /* Plugins.swift in Sources */,
 				6730FF7627BD00CC00008003 /* TokenStorageService.swift in Sources */,
 				6771855427BF92CC0015F2FF /* DependencyFactory.swift in Sources */,
 				6771854C27BF80770015F2FF /* UserProfileService.swift in Sources */,
@@ -554,31 +536,33 @@
 				6746F4D3277DEDEF0060BA5E /* AppDependencies.swift in Sources */,
 				6730FF9827BD371D00008003 /* ApiResponse.swift in Sources */,
 				67563418278EE9A0000EE920 /* DisplayAlertService.swift in Sources */,
-				676F9D4827D9E27200F9768B /* ErrorResponse.swift in Sources */,
-				676F9D4127D9E27200F9768B /* AuthAPI.swift in Sources */,
-				676F9D4227D9E27200F9768B /* ProfileAPI.swift in Sources */,
+				678A4326280F05E900E8CA00 /* ErrorResponse.swift in Sources */,
+				678A4320280F05E900E8CA00 /* ProfileAPI.swift in Sources */,
+				678A4328280F05E900E8CA00 /* ProfileResponse.swift in Sources */,
 				6746F49C277DAE0D0060BA5E /* AppDelegate.swift in Sources */,
+				678A4327280F05E900E8CA00 /* Token.swift in Sources */,
 				6730FF7227BCFBE300008003 /* ProjectDateFormattingService.swift in Sources */,
 				6746F49E277DAE0D0060BA5E /* SceneDelegate.swift in Sources */,
-				676F9D4927D9E27200F9768B /* Token.swift in Sources */,
+				678A4321280F05E900E8CA00 /* APIDateFormat.swift in Sources */,
+				678A4323280F05E900E8CA00 /* Plugins.swift in Sources */,
 				6756342D278F0D6B000EE920 /* ExternalService.swift in Sources */,
+				678A4322280F05E900E8CA00 /* TokensResponse.swift in Sources */,
 				6730FF8E27BD249B00008003 /* AuthService.swift in Sources */,
+				678A431F280F05E900E8CA00 /* AuthAPI.swift in Sources */,
 				6730FF8227BD14DC00008003 /* ProjectNetworkService.swift in Sources */,
 				6746F4CF277DC40B0060BA5E /* Weaver.swift in Sources */,
 				6746F4D1277DE9270060BA5E /* LoginView.swift in Sources */,
 				6756341A278EEBED000EE920 /* RefreshTokenService.swift in Sources */,
-				676F9D4427D9E27200F9768B /* TokensResponse.swift in Sources */,
-				676F9D4327D9E27200F9768B /* APIDateFormat.swift in Sources */,
-				676F9D4A27D9E27200F9768B /* ProfileResponse.swift in Sources */,
 				674E606927C3E2030067DD05 /* ErrorHandlingRegistrationService.swift in Sources */,
 				67563442278F2710000EE920 /* LoginPresenter.swift in Sources */,
 				67301E2D27BFC19300862504 /* ProjectJsonCodingConfigurator.swift in Sources */,
-				676F9D4727D9E27200F9768B /* PetshopAPI+Servers.swift in Sources */,
 				6756343C278F1ED0000EE920 /* CodeConfirmView.swift in Sources */,
 				67563438278F1E3D000EE920 /* CodeConfirmViewController.swift in Sources */,
 				6730FF9627BD36BD00008003 /* ErrorType.swift in Sources */,
 				6746F4D5277DF07A0060BA5E /* PreviewDependencies.swift in Sources */,
+				678A4325280F05E900E8CA00 /* PetshopAPI+Servers.swift in Sources */,
 				67563414278EE636000EE920 /* AuthFlow.swift in Sources */,
+				678A431E280F05E900E8CA00 /* TokensRenewRequestBody.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -792,7 +776,7 @@
 			repositoryURL = "https://github.com/TouchInstinct/LeadKit";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.11.0;
+				minimumVersion = 1.15.0;
 			};
 		};
 		6746F4BE277DB0A20060BA5E /* XCRemoteSwiftPackageReference "SnapKit" */ = {

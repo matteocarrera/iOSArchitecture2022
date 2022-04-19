@@ -38,12 +38,12 @@ final class AuthService {
         return updateTokens(for: await networkService.process(request: request))
     }
 
-    private func updateTokens(for result: ApiResponse<TokensResponse>) -> ApiResponse<TokensResponse> {
+    private func updateTokens(for result: EndpointRequestResult<TokensResponse, ErrorResponse>) -> ApiResponse<TokensResponse> {
         if case let .success(tokenResponse) = result {
             tokenStorage.update(tokens: tokenResponse)
         }
 
-        return result
+        return result.mapError { $0.errorResponse }
     }
 }
 

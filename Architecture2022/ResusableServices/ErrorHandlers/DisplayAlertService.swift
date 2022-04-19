@@ -6,7 +6,7 @@ final class DisplayAlertService: AsyncErrorHandler {
 
     // MARK: - ErrorHandler
 
-    func handle(_ error: ErrorResponse) async -> Bool {
+    func handle(_ error: EndpointErrorResult<ErrorResponse>) async -> Bool {
         await withCheckedContinuation { continuation in
             DispatchQueue.main.async { [weak hostViewController] in
                 let alertController = Self.composeAlert(for: error, continuation: continuation)
@@ -25,11 +25,11 @@ final class DisplayAlertService: AsyncErrorHandler {
         self.hostViewController = hostViewController
     }
 
-    private static func composeAlert(for error: ErrorResponse,
+    private static func composeAlert(for error: EndpointErrorResult<ErrorResponse>,
                                      continuation: CheckedContinuation<Bool, Never>) -> UIAlertController {
 
         let alertController = UIAlertController(title: "An error has occured",
-                                                message: error.message,
+                                                message: error.errorResponse.message,
                                                 preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: "OK",
