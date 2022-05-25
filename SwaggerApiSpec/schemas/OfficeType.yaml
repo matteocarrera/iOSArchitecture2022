@@ -1,0 +1,7 @@
+title: OfficeType
+description: "Тип офиса"
+type: string
+enum: 
+  - PVZ
+  - POSTAMAT
+default: PVZ

@@ -1,0 +1,11 @@
+title: PickupPointsResponse
+description: "Офисы на карте"
+type: object
+properties:
+  websiteOffices:
+    type: array
+    items:
+      $ref: "../schemas/Office.yaml"
+    description: "Список офисов"
+required:
+  - websiteOffices

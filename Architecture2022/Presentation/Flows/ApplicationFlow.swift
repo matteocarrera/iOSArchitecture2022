@@ -6,6 +6,9 @@ final class ApplicationFlow {
     private var authFlow: AuthFlow
 
     @Weaver(.reference)
+    private var pickupFlow: PickupFlow
+
+    @Weaver(.reference)
     private var errorHandlingRegistrationService: ErrorHandlingRegistrationService
 
     private var window: UIWindow?
@@ -27,9 +30,11 @@ final class ApplicationFlow {
 
         errorHandlingRegistrationService.registerUIHandlers(alertHostViewController: navigationController)
 
-        authFlow.start(on: navigationController) { [weak self] in
-            self?.startMainFlow(with: $0)
-        }
+        pickupFlow.start(on: navigationController)
+
+//        authFlow.start(on: navigationController) { [weak self] in
+//            self?.startMainFlow(with: $0)
+//        }
     }
 
     private func startMainFlow(with profile: ProfileResponse) {

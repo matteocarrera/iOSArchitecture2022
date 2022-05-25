@@ -35,6 +35,9 @@ final class AppDependencies {
     var authService: AuthService
 
     @Weaver(.registration)
+    var picupService: OfficessService
+
+    @Weaver(.registration)
     var projectDateFormattingService: ProjectDateFormattingService
 
     @Weaver(.registration)
@@ -48,6 +51,9 @@ final class AppDependencies {
 
     @Weaver(.registration)
     var authFlow: AuthFlow
+
+    @Weaver(.registration)
+    var pickupFlow: PickupFlow
 
     @Weaver(.registration)
     var applicationFlow: ApplicationFlow

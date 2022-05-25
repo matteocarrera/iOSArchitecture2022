@@ -1,0 +1,6 @@
+title: OperationName
+description: "Название операции GraphQL"
+type: string
+enum: 
+  - websiteOffices
+default: websiteOffices

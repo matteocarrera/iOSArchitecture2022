@@ -14,6 +14,9 @@ paths:
   # Profile
   /api/v3/mobile/profile/:
     $ref: "./paths/auth/ProfileRequest.yaml"
+  # Pickup points
+  /graphql:
+    $ref: "./paths/officess/GraphQLRequest.yaml"
 
 components:
   securitySchemes:

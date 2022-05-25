@@ -1,0 +1,18 @@
+post:
+  operationId: GraphQLRequest
+  tags:
+    - officess
+  summary: "Запрос офисов на карте"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../requestBodies/officess/GraphQLRequestBody.yaml"  
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/GraphQLOfficesResponse.yaml"
+

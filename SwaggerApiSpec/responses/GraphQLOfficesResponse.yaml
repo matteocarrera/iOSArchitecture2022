@@ -1,0 +1,8 @@
+title: GraphQLOfficesResponse
+description: "Ответ GraphQL с офисами на карте"
+type: object
+properties:
+  data:
+    $ref: "OfficesResponse.yaml"
+required:
+  - data

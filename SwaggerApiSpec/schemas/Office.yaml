@@ -1,0 +1,20 @@
+title: Office
+description: "Офис на карте"
+type: object
+properties:
+  id:
+    description: "Идентификатор"
+    type: integer
+  type:
+    $ref: "OfficeType.yaml"
+  geoLatitude:
+    description: "Широта"
+    type: string
+  geoLongitude:
+    description: "Долгота"
+    type: string
+required:
+  - id
+  - type
+  - geoLatitude
+  - geoLongitude

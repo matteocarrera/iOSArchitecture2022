@@ -1,0 +1,12 @@
+title: GraphQLRequestBody
+description: Тело запроса на получение офисов
+type: object
+properties:
+  operationName:
+    $ref: "../../schemas/OperationName.yaml"
+  query:
+    type: string
+    description: "GraphQL запрос"
+required:
+  - operationName
+  - query

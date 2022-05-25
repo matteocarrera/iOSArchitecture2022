@@ -18,6 +18,9 @@ final class ProjectNetworkService: DefaultRecoverableJsonNetworkService<ErrorRes
             tokenStorageService.accessToken?.value
         }
 
+        let displayDecodingErrorPlugin = ProjectDisplayDecodingErrorPlugin()
+
+        plugins.append(displayDecodingErrorPlugin)
         plugins.append(accessTokenPlugin)
     }
 }

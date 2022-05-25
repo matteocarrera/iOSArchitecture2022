@@ -101,3 +101,6 @@ cpd-output.xml
 *.swp
 *IDEWorkspaceChecks.plist
 swiftlint_files
+
+# Gem
+.gem/
