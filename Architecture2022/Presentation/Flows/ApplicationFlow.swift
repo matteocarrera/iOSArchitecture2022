@@ -1,5 +1,6 @@
 import UIKit
 
+@MainActor
 final class ApplicationFlow {
 
     @Weaver(.reference)
@@ -9,13 +10,16 @@ final class ApplicationFlow {
     private var pickupFlow: PickupFlow
 
     @Weaver(.reference)
+    private var mainFlow: MainFlow
+
+    @Weaver(.reference)
     private var errorHandlingRegistrationService: ErrorHandlingRegistrationService
 
     private var window: UIWindow?
 
     private var rootNavigation: UINavigationController?
 
-    init(injecting _: ApplicationFlowDependencyResolver) {
+    nonisolated init(injecting _: ApplicationFlowDependencyResolver) {
         //
     }
 
@@ -30,15 +34,10 @@ final class ApplicationFlow {
 
         errorHandlingRegistrationService.registerUIHandlers(alertHostViewController: navigationController)
 
-        pickupFlow.start(on: navigationController)
+//        pickupFlow.start(on: navigationController)
 
-//        authFlow.start(on: navigationController) { [weak self] in
-//            self?.startMainFlow(with: $0)
-//        }
-    }
-
-    private func startMainFlow(with profile: ProfileResponse) {
-        let mainController = UIViewController()
-        rootNavigation?.setViewControllers([mainController], animated: true)
+        authFlow.start(on: navigationController) { [weak self] in
+            self?.mainFlow.start(on: navigationController)
+        }
     }
 }

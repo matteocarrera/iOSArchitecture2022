@@ -25,5 +25,8 @@ final class PreviewDependencies {
     var appKeychain: Keychain
 
     @Weaver(.registration)
+    var authService: AuthService
+
+    @Weaver(.registration)
     var userProfileService: UserProfileService
 }

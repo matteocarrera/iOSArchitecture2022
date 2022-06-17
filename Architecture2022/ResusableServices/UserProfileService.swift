@@ -23,7 +23,7 @@ final class UserProfileService {
             currentProfile = profile
         }
 
-        return result.mapError { $0.errorResponse }
+        return result.mapError { $0.map { $0.errorResponse } }
     }
 
     func clear() {

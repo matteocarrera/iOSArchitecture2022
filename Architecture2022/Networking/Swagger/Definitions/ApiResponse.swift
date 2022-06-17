@@ -1,11 +1,18 @@
-import TIMoyaNetworking
+import TINetworking
 import Moya
 
 extension ErrorResponse: Error {}
 
-typealias ApiResponse<ResponseType> = Result<ResponseType, ErrorResponse>
+extension ErrorResponse {
+    static var `default`: Self {
+        .init(errorCode: .unknown,
+              errorMessage: "Ошибка 😔")
+    }
+}
 
-extension EndpointErrorResult where E == ErrorResponse {
+typealias ApiResponse<ResponseType> = Result<ResponseType, ErrorCollection<ErrorResponse>>
+
+extension EndpointErrorResult where ApiError == ErrorResponse, NetworkError == MoyaError {
     var errorResponse: ErrorResponse {
         switch self {
         case let .apiError(errorResponse):
@@ -21,15 +28,15 @@ private extension MoyaError {
         switch self {
         case .underlying:
             return ErrorResponse(errorCode: .unknown,
-                                 message: "Нет соединения с сетью 😔 Проверьте соединение с сетью и повторите попытку")
+                                 errorMessage: "Нет соединения с сетью 😔 Проверьте соединение с сетью и повторите попытку")
 
         case .objectMapping:
             return ErrorResponse(errorCode: .unknown,
-                                 message: "Ошибка 😔")
+                                 errorMessage: "Ошибка 😔")
 
         default:
             return ErrorResponse(errorCode: .unknown,
-                                 message: "Ошибка 😔")
+                                 errorMessage: "Ошибка 😔")
         }
     }
 }

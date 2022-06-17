@@ -11,42 +11,6 @@
         }
       },
       {
-        "package": "Cache",
-        "repositoryURL": "https://github.com/hyperoslo/Cache.git",
-        "state": {
-          "branch": null,
-          "revision": "c7f4d633049c3bd649a353bad36f6c17e9df085f",
-          "version": "6.0.0"
-        }
-      },
-      {
-        "package": "Cursors",
-        "repositoryURL": "https://github.com/petropavel13/Cursors",
-        "state": {
-          "branch": null,
-          "revision": "a1561869135e72832eff3b1e729075c56c2eebf6",
-          "version": "0.5.1"
-        }
-      },
-      {
-        "package": "KeychainAccess",
-        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess.git",
-        "state": {
-          "branch": null,
-          "revision": "84e546727d66f1adc5439debad16270d0fdd04e7",
-          "version": "4.2.2"
-        }
-      },
-      {
-        "package": "LeadKit",
-        "repositoryURL": "https://github.com/TouchInstinct/LeadKit",
-        "state": {
-          "branch": null,
-          "revision": "70c4b4e00dd59fd3577be613bc66374f1622958b",
-          "version": "1.15.0"
-        }
-      },
-      {
         "package": "Moya",
         "repositoryURL": "git@github.com:Moya/Moya.git",
         "state": {
@@ -92,12 +56,12 @@
         }
       },
       {
-        "package": "TableKit",
-        "repositoryURL": "https://github.com/maxsokolov/TableKit.git",
+        "package": "SwiftUIX",
+        "repositoryURL": "https://github.com/SwiftUIX/SwiftUIX",
         "state": {
           "branch": null,
-          "revision": "8bf4840d9d0475a92352f02f368f88b74eced447",
-          "version": "2.11.0"
+          "revision": "889c781539cdd1e6a1111472c711082522aa35c6",
+          "version": "0.1.2"
         }
       }
     ]

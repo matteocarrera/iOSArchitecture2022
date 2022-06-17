@@ -19,17 +19,27 @@ final class AuthService {
         //
     }
 
-    func authorization(login: String,
-                       password: String) async -> ApiResponse<TokensResponse> {
-
-        let body = LoginPasswordRequestBody(login: login, password: password)
-
-        return updateTokens(for: await networkService.process(request: .loginPasswordRequest(body: body)))
+    func authorization(credentials: LoginPasswordRequestBody) async -> ProjectNetworkService.EndpointResponse<TokensResponse> {
+        updateTokens(for: await networkService.process(request: .loginPasswordRequest(body: credentials))
+                            .mapError { .init(failures: [$0]) })
     }
 
-    func refreshToken() async -> ApiResponse<TokensResponse> {
+    func authorization(credentials: SMSSendRequestBody) async -> ProjectNetworkService.EndpointResponse<SMSSendResponse> {
+        await networkService.process(request: .sMSSendRequest(body: credentials))
+            .mapError { .init(failures: [$0]) }
+    }
+
+    func smsConfirm(confirmData: LoginSMSRequestBody) async -> ProjectNetworkService.EndpointResponse<TokensResponse> {
+        updateTokens(for: await networkService.process(recoverableRequest: .loginSMSRequest(body: confirmData)))
+    }
+
+    func codeResend(resendData: ProfileCommunicationRequestBody) async -> ProjectNetworkService.EndpointResponse<ProfileCommunicationResponse> {
+        await networkService.process(recoverableRequest: .profileCommunicationRequest(body: resendData))
+    }
+
+    func refreshToken() async -> ProjectNetworkService.RequestResult<TokensResponse, ErrorResponse> {
         guard let refreshToken = tokenStorage.refreshToken else {
-            return .failure(.localTokenMissing())
+            return .failure(.apiError(.localTokenMissing()))
         }
 
         let body = TokensRenewRequestBody(refreshToken: refreshToken.value)
@@ -38,17 +48,17 @@ final class AuthService {
         return updateTokens(for: await networkService.process(request: request))
     }
 
-    private func updateTokens(for result: EndpointRequestResult<TokensResponse, ErrorResponse>) -> ApiResponse<TokensResponse> {
+    private func updateTokens<F>(for result: Result<TokensResponse, F>) -> Result<TokensResponse, F> {
         if case let .success(tokenResponse) = result {
             tokenStorage.update(tokens: tokenResponse)
         }
 
-        return result.mapError { $0.errorResponse }
+        return result
     }
 }
 
 private extension ErrorResponse {
     static func localTokenMissing() -> Self {
-        .init(errorCode: .sessionNotRenewable, message: "Вы не авторизованы 😔")
+        .init(errorCode: .sessionNotRenewable, errorMessage: "Вы не авторизованы 😔")
     }
 }

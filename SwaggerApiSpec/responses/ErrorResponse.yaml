@@ -5,9 +5,9 @@ properties:
   errorCode:
     description: "Код ошибки"
     type: string
-  message:
+  errorMessage:
     description: "Текст сообщения об ошибке"
     type: string
 required:
   - errorCode
-  - message
+  - errorMessage

@@ -1,9 +1,10 @@
 import SwiftUI
 import TISwiftUtils
 
+@MainActor
 final class AuthFlow {
 
-    typealias ResultCompletion = ParameterClosure<ProfileResponse>
+    typealias ResultCompletion = VoidClosure
 
     @Weaver(.reference)
     private var authService: AuthService
@@ -11,51 +12,39 @@ final class AuthFlow {
     @Weaver(.reference)
     private var userProfileService: UserProfileService
 
-    init(injecting: AuthFlowDependencyResolver) {
+    nonisolated init(injecting: AuthFlowDependencyResolver) {
         //
     }
 
     func start(on rootNavigation: UINavigationController, completion: @escaping ResultCompletion) {
-        if authService.isLoggedIn, let userProfile = userProfileService.currentProfile {
+        if authService.isLoggedIn {
             debugPrint("Open main flow")
 
-            completion(userProfile)
+            completion()
         } else {
             debugPrint("Open auth flow")
 
-            let loginView = LoginView(presenter: .init(userProfileService: userProfileService),
-                                      output: .init(onLogin: { [weak self] in
-                self?.startLogin(with: $0, navigation: rootNavigation, completion: completion)
+            let presenter = PhoneLoginPresenter(authService: authService,
+                                output: .init(otpRequested: { [weak self] in
+                self?.startCodeConfirm(navigation: rootNavigation,
+                                       phoneLoginResult: $0,
+                                       completion: completion)
             }))
 
-            rootNavigation.pushViewController(UIHostingController(rootView: loginView), animated: false)
+            rootNavigation.pushViewController(UIHostingController(rootView: presenter.createView()), animated: false)
         }
     }
 
-    private func startLogin(with credentials: LoginPasswordRequestBody,
-                            navigation: UINavigationController,
-                            completion: @escaping ResultCompletion) {
+    private func startCodeConfirm(navigation: UINavigationController,
+                                  phoneLoginResult: PhoneLoginPresenter.ModuleResult,
+                                  completion: @escaping VoidClosure) {
 
-        Task {
-            let loginResponse = await authService.authorization(login: credentials.login,
-                                                                password: credentials.password)
-
-            if case .success = loginResponse, let profile = try? await userProfileService.profile().get() {
-                debugPrint("Success auth with profile \(profile.name)")
-                DispatchQueue.main.async {
-                    completion(profile)
-                }
-            } else {
-                debugPrint("Auth failed")
-            }
-        }
-    }
-
-    private func startCodeConfirm(navigation: UINavigationController, completion: @escaping VoidClosure) {
-        let codeConfirmViewController = CodeConfirmViewController(viewModel: CodeConfirmPresenter())
-        codeConfirmViewController.output = .init(onCodeConfirm: {
+        let codeConfirmViewController = ProjectCodeConfirmPresenter(input: phoneLoginResult,
+                                                                       authService: authService,
+                                                                       output: .init(onConfirmSuccess: { _ in
             completion()
-        })
+        }))
+            .createViewController()
 
         navigation.pushViewController(codeConfirmViewController, animated: true)
     }

@@ -1,0 +1,7 @@
+title: ProfileCommunicationResponse
+description: "Ответ на запрос кода подтверждения"
+type: object
+properties:
+  lifetime:
+    type: integer
+    description: Время действия кода в секундах

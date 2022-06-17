@@ -1,0 +1,6 @@
+title: CommunicationType
+description: Тип связи
+type: string
+enum: 
+  - phone
+  - email

@@ -56,6 +56,9 @@ final class AppDependencies {
     var pickupFlow: PickupFlow
 
     @Weaver(.registration)
+    var mainFlow: MainFlow
+
+    @Weaver(.registration)
     var applicationFlow: ApplicationFlow
 
 }

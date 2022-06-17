@@ -169,6 +169,10 @@ final class MainDependencyContainer {
         return getBuilder(for: "localAuthenticationContext", type: LAContext.self)(nil)
     }
 
+    var mainFlow: MainFlow {
+        return getBuilder(for: "mainFlow", type: MainFlow.self)(nil)
+    }
+
     var networkService: ProjectNetworkService {
         return getBuilder(for: "networkService", type: ProjectNetworkService.self)(nil)
     }
@@ -274,7 +278,7 @@ final class MainDependencyContainer {
             guard let _self = _self else {
                 MainDependencyContainer.fatalError()
             }
-            let __self = _self.authServiceDependencyResolver()
+            let __self = _self.authServiceDependencyResolver("AppDependencies")
             return AuthService(injecting: __self)
         }
         _self.builders["picupService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> OfficessService in
@@ -332,6 +336,15 @@ final class MainDependencyContainer {
             let __self = _self.pickupFlowDependencyResolver()
             return PickupFlow(injecting: __self)
         }
+        _self.builders["mainFlow"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> MainFlow in
+            defer { MainDependencyContainer._dynamicResolversLock.unlock() }
+            MainDependencyContainer._dynamicResolversLock.lock()
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            let __self = _self.mainFlowDependencyResolver()
+            return MainFlow(injecting: __self)
+        }
         _self.builders["applicationFlow"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> ApplicationFlow in
             defer { MainDependencyContainer._dynamicResolversLock.unlock() }
             MainDependencyContainer._dynamicResolversLock.lock()
@@ -368,6 +381,7 @@ final class MainDependencyContainer {
         )(nil)
         _ = _self.getBuilder(for: "authFlow", type: AuthFlow.self)(nil)
         _ = _self.getBuilder(for: "pickupFlow", type: PickupFlow.self)(nil)
+        _ = _self.getBuilder(for: "mainFlow", type: MainFlow.self)(nil)
         _ = _self.getBuilder(for: "applicationFlow", type: ApplicationFlow.self)(nil)
         MainDependencyContainer._pushDynamicResolver({ _self.localAuthenticationContext })
         MainDependencyContainer._pushDynamicResolver({ _self.appKeychain })
@@ -385,6 +399,7 @@ final class MainDependencyContainer {
         MainDependencyContainer._pushDynamicResolver({ _self.errorHandlingRegistrationService })
         MainDependencyContainer._pushDynamicResolver({ _self.authFlow })
         MainDependencyContainer._pushDynamicResolver({ _self.pickupFlow })
+        MainDependencyContainer._pushDynamicResolver({ _self.mainFlow })
         MainDependencyContainer._pushDynamicResolver({ _self.applicationFlow })
         return _self
     }
@@ -431,6 +446,15 @@ final class MainDependencyContainer {
             }
             return DependencyFactory.makeAppKeychainThisDeviceOnly(_self as KeychainInputDependencyResolver)
         }
+        _self.builders["authService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> AuthService in
+            defer { MainDependencyContainer._dynamicResolversLock.unlock() }
+            MainDependencyContainer._dynamicResolversLock.lock()
+            guard let _self = _self else {
+                MainDependencyContainer.fatalError()
+            }
+            let __self = _self.authServiceDependencyResolver("PreviewDependencies")
+            return AuthService(injecting: __self)
+        }
         _self.builders["userProfileService"] = lazyBuilder { [weak _self] (_: Optional<ParametersCopier>) -> UserProfileService in
             defer { MainDependencyContainer._dynamicResolversLock.unlock() }
             MainDependencyContainer._dynamicResolversLock.lock()
@@ -442,12 +466,15 @@ final class MainDependencyContainer {
         }
         _self.builders["jsonCodingConfigurator"] = _self.builder(_self.projectJsonCodingConfigurator)
         _self.builders["projectJsonCodingConfigurator"] = _self.builder(_self.projectJsonCodingConfigurator)
+        _self.builders["tokenStorage"] = _self.builder(_self.tokenStorageService)
+        _self.builders["tokenStorageService"] = _self.builder(_self.tokenStorageService)
         _ = _self.getBuilder(for: "dateFormattersReusePool", type: DateFormattersReusePool.self)(nil)
         _ = _self.getBuilder(for: "iso8601DateFormattersReusePool", type: ISO8601DateFormattersReusePool.self)(nil)
         _ = _self.getBuilder(for: "projectJsonCodingConfigurator", type: ProjectJsonCodingConfigurator.self)(nil)
         _ = _self.getBuilder(for: "tokenStorageService", type: TokenStorageService.self)(nil)
         _ = _self.getBuilder(for: "networkService", type: ProjectNetworkService.self)(nil)
         _ = _self.getBuilder(for: "appKeychain", type: Keychain.self)(nil)
+        _ = _self.getBuilder(for: "authService", type: AuthService.self)(nil)
         _ = _self.getBuilder(for: "userProfileService", type: UserProfileService.self)(nil)
         MainDependencyContainer._pushDynamicResolver({ _self.dateFormattersReusePool })
         MainDependencyContainer._pushDynamicResolver({ _self.iso8601DateFormattersReusePool })
@@ -455,6 +482,7 @@ final class MainDependencyContainer {
         MainDependencyContainer._pushDynamicResolver({ _self.tokenStorageService })
         MainDependencyContainer._pushDynamicResolver({ _self.networkService })
         MainDependencyContainer._pushDynamicResolver({ _self.appKeychain })
+        MainDependencyContainer._pushDynamicResolver({ _self.authService })
         MainDependencyContainer._pushDynamicResolver({ _self.userProfileService })
         return _self
     }
@@ -468,9 +496,11 @@ final class MainDependencyContainer {
         let _self = MainDependencyContainer()
         _self.builders["authFlow"] = _self.builder(authFlow)
         _self.builders["errorHandlingRegistrationService"] = _self.builder(errorHandlingRegistrationService)
+        _self.builders["mainFlow"] = _self.builder(mainFlow)
         _self.builders["pickupFlow"] = _self.builder(pickupFlow)
         MainDependencyContainer._pushDynamicResolver({ _self.authFlow })
         MainDependencyContainer._pushDynamicResolver({ _self.pickupFlow })
+        MainDependencyContainer._pushDynamicResolver({ _self.mainFlow })
         MainDependencyContainer._pushDynamicResolver({ _self.errorHandlingRegistrationService })
         return _self
     }
@@ -484,6 +514,13 @@ final class MainDependencyContainer {
         return _self
     }
 
+    private func mainFlowDependencyResolver() -> MainFlowDependencyResolver {
+        let _self = MainDependencyContainer()
+        _self.builders["userProfileService"] = _self.builder(userProfileService)
+        MainDependencyContainer._pushDynamicResolver({ _self.userProfileService })
+        return _self
+    }
+
     private func pickupFlowDependencyResolver() -> PickupFlowDependencyResolver {
         let _self = MainDependencyContainer()
         _self.builders["pickupService"] = _self.builder(picupService)
@@ -492,10 +529,17 @@ final class MainDependencyContainer {
         return _self
     }
 
-    private func authServiceDependencyResolver() -> AuthServiceDependencyResolver {
+    private func authServiceDependencyResolver(_ source: String) -> AuthServiceDependencyResolver {
         let _self = MainDependencyContainer()
-        _self.builders["networkService"] = _self.builder(projectNetworkService)
-        _self.builders["projectNetworkService"] = _self.builder(projectNetworkService)
+        switch source {
+        case "AppDependencies":
+            _self.builders["networkService"] = _self.builder(projectNetworkService)
+            _self.builders["projectNetworkService"] = _self.builder(projectNetworkService)
+        case "PreviewDependencies":
+            _self.builders["networkService"] = _self.builder(networkService)
+        default:
+            MainDependencyContainer.fatalError()
+        }
         _self.builders["tokenStorage"] = _self.builder(tokenStorageService)
         _self.builders["tokenStorageService"] = _self.builder(tokenStorageService)
         MainDependencyContainer._pushDynamicResolver({ _self.networkService })
@@ -635,6 +679,10 @@ protocol LocalAuthenticationContextResolver: AnyObject {
     var localAuthenticationContext: LAContext { get }
 }
 
+protocol MainFlowResolver: AnyObject {
+    var mainFlow: MainFlow { get }
+}
+
 protocol NetworkServiceResolver: AnyObject {
     var networkService: ProjectNetworkService { get }
 }
@@ -679,19 +727,21 @@ protocol UserProfileServiceResolver: AnyObject {
     var userProfileService: UserProfileService { get }
 }
 
-extension MainDependencyContainer: AppKeychainResolver, ApplicationFlowResolver, AuthFlowResolver, AuthServiceResolver, DateFormattersReusePoolResolver, DisplayAlertServiceResolver, ErrorHandlingRegistrationServiceResolver, Iso8601DateFormattersReusePoolResolver, JsonCodingConfiguratorResolver, LocalAuthenticationContextResolver, NetworkServiceResolver, PickupFlowResolver, PickupServiceResolver, PicupServiceResolver, ProjectDateFormattingServiceResolver, ProjectJsonCodingConfiguratorResolver, ProjectNetworkServiceResolver, RefreshTokenServiceResolver, TokenStorageResolver, TokenStorageServiceResolver, UserProfileServiceResolver {
+extension MainDependencyContainer: AppKeychainResolver, ApplicationFlowResolver, AuthFlowResolver, AuthServiceResolver, DateFormattersReusePoolResolver, DisplayAlertServiceResolver, ErrorHandlingRegistrationServiceResolver, Iso8601DateFormattersReusePoolResolver, JsonCodingConfiguratorResolver, LocalAuthenticationContextResolver, MainFlowResolver, NetworkServiceResolver, PickupFlowResolver, PickupServiceResolver, PicupServiceResolver, ProjectDateFormattingServiceResolver, ProjectJsonCodingConfiguratorResolver, ProjectNetworkServiceResolver, RefreshTokenServiceResolver, TokenStorageResolver, TokenStorageServiceResolver, UserProfileServiceResolver {
 }
 
 extension MainDependencyContainer {
 }
 
-typealias AppDependenciesDependencyResolver = LocalAuthenticationContextResolver & AppKeychainResolver & DateFormattersReusePoolResolver & Iso8601DateFormattersReusePoolResolver & ProjectJsonCodingConfiguratorResolver & TokenStorageServiceResolver & ProjectNetworkServiceResolver & UserProfileServiceResolver & AuthServiceResolver & PicupServiceResolver & ProjectDateFormattingServiceResolver & RefreshTokenServiceResolver & DisplayAlertServiceResolver & ErrorHandlingRegistrationServiceResolver & AuthFlowResolver & PickupFlowResolver & ApplicationFlowResolver
+typealias AppDependenciesDependencyResolver = LocalAuthenticationContextResolver & AppKeychainResolver & DateFormattersReusePoolResolver & Iso8601DateFormattersReusePoolResolver & ProjectJsonCodingConfiguratorResolver & TokenStorageServiceResolver & ProjectNetworkServiceResolver & UserProfileServiceResolver & AuthServiceResolver & PicupServiceResolver & ProjectDateFormattingServiceResolver & RefreshTokenServiceResolver & DisplayAlertServiceResolver & ErrorHandlingRegistrationServiceResolver & AuthFlowResolver & PickupFlowResolver & MainFlowResolver & ApplicationFlowResolver
 
-typealias PreviewDependenciesDependencyResolver = DateFormattersReusePoolResolver & Iso8601DateFormattersReusePoolResolver & ProjectJsonCodingConfiguratorResolver & TokenStorageServiceResolver & NetworkServiceResolver & AppKeychainResolver & UserProfileServiceResolver
+typealias PreviewDependenciesDependencyResolver = DateFormattersReusePoolResolver & Iso8601DateFormattersReusePoolResolver & ProjectJsonCodingConfiguratorResolver & TokenStorageServiceResolver & NetworkServiceResolver & AppKeychainResolver & AuthServiceResolver & UserProfileServiceResolver
 
-typealias ApplicationFlowDependencyResolver = AuthFlowResolver & PickupFlowResolver & ErrorHandlingRegistrationServiceResolver
+typealias ApplicationFlowDependencyResolver = AuthFlowResolver & PickupFlowResolver & MainFlowResolver & ErrorHandlingRegistrationServiceResolver
 
 typealias AuthFlowDependencyResolver = AuthServiceResolver & UserProfileServiceResolver
+
+typealias MainFlowDependencyResolver = UserProfileServiceResolver
 
 typealias PickupFlowDependencyResolver = PickupServiceResolver
 
@@ -713,9 +763,9 @@ typealias TokenStorageServiceDependencyResolver = AppKeychainResolver & JsonCodi
 
 typealias UserProfileServiceDependencyResolver = NetworkServiceResolver & TokenStorageServiceResolver
 
-typealias KeychainInputDependencyResolver = AppKeychainResolver & DateFormattersReusePoolResolver & Iso8601DateFormattersReusePoolResolver & ProjectJsonCodingConfiguratorResolver & TokenStorageServiceResolver & UserProfileServiceResolver
+typealias KeychainInputDependencyResolver = AppKeychainResolver & AuthServiceResolver & DateFormattersReusePoolResolver & Iso8601DateFormattersReusePoolResolver & ProjectJsonCodingConfiguratorResolver & TokenStorageServiceResolver & UserProfileServiceResolver
 
-typealias LAContextInputDependencyResolver = AppKeychainResolver & ApplicationFlowResolver & AuthFlowResolver & AuthServiceResolver & DateFormattersReusePoolResolver & DisplayAlertServiceResolver & ErrorHandlingRegistrationServiceResolver & Iso8601DateFormattersReusePoolResolver & LocalAuthenticationContextResolver & PickupFlowResolver & PicupServiceResolver & ProjectDateFormattingServiceResolver & ProjectJsonCodingConfiguratorResolver & ProjectNetworkServiceResolver & RefreshTokenServiceResolver & TokenStorageServiceResolver & UserProfileServiceResolver
+typealias LAContextInputDependencyResolver = AppKeychainResolver & ApplicationFlowResolver & AuthFlowResolver & AuthServiceResolver & DateFormattersReusePoolResolver & DisplayAlertServiceResolver & ErrorHandlingRegistrationServiceResolver & Iso8601DateFormattersReusePoolResolver & LocalAuthenticationContextResolver & MainFlowResolver & PickupFlowResolver & PicupServiceResolver & ProjectDateFormattingServiceResolver & ProjectJsonCodingConfiguratorResolver & ProjectNetworkServiceResolver & RefreshTokenServiceResolver & TokenStorageServiceResolver & UserProfileServiceResolver
 
 @propertyWrapper
 struct Weaver<ConcreteType, AbstractType> {

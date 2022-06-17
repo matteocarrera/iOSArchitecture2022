@@ -1,0 +1,33 @@
+post:
+  operationId: LoginSMSRequest
+  tags:
+    - auth
+  summary: "Авторизация по телефону и смс коду"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../requestBodies/auth/LoginSMSRequestBody.yaml"  
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/TokensResponse.yaml"
+    '400':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"
+    '403':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"
+    '500':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"
+

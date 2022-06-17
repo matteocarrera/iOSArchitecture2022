@@ -1,46 +1,36 @@
-import Foundation
-import TIMoyaNetworking
+import TINetworking
 import TIFoundationUtils
+import Moya
 
-final class RefreshTokenService: AsyncErrorHandler {
+final class RefreshTokenService: EndpointResponseTokenInterceptor<ErrorResponse, MoyaError> {
 
     @Weaver(.reference)
     var authService: AuthService
 
-    private let queue: OperationQueue
-
     init(injecting: RefreshTokenServiceDependencyResolver) {
-        queue = OperationQueue()
-        queue.maxConcurrentOperationCount = 1
-    }
-
-    func handle(_ error: EndpointErrorResult<ErrorResponse>) async -> Bool {
-        let oldAccessToken = authService.tokenStorage.accessToken
-
-        guard case let .apiError(apiError) = error else {
-            return false
-        }
-
-        switch apiError.errorCode {
-        case .invalidJwtToken,
-             .incorrectJwtTokenGiven:
-
-            return await withCheckedContinuation { continuation in
-                ClosureAsyncOperation { [authService] () async -> Bool in
-                    guard oldAccessToken != authService.tokenStorage.accessToken else {
-                        return (try? await authService.refreshToken().get()) != nil
-                    }
-
-                    return true
+        super.init { [authService = injecting.authService] _, _ in
+            authService.tokenStorage.isAccessTokenValid
+        } refreshTokenClosure: { [authService = injecting.authService] errorCompletion in
+            _Concurrency.Task {
+                switch await authService.refreshToken() {
+                case .success:
+                    errorCompletion(nil)
+                case let .failure(errorResponse):
+                    errorCompletion(errorResponse)
                 }
-                .observe(onSuccess: {
-                    continuation.resume(returning: $0)
-                },
-                         callbackQueue: .global(qos: .userInitiated))
-                .add(to: queue)
             }
-        default:
-            return false
+        } isTokenInvalidErrorResultClosure: { endpointErrorResult in
+            guard case let .apiError(apiError) = endpointErrorResult else {
+                return false
+            }
+
+            switch apiError.errorCode {
+            case .invalidJwtToken,
+                 .incorrectJwtTokenGiven:
+                return true
+            default:
+                return false
+            }
         }
     }
 }

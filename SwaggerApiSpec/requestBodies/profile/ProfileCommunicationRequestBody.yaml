@@ -1,0 +1,12 @@
+title: ProfileCommunicationRequestBody
+description: Тело запроса для получения кода подтверждения
+type: object
+properties:
+  value:
+    type: string
+    description: Номер телефона или адрес почты
+  communicationType:
+    $ref: "../../schemas/CommunicationType.yaml"
+required:
+  - value
+  - communicationType

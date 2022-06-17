@@ -1,0 +1,11 @@
+title: ProfileResponse
+x-stoplight:
+  id: f21a3de478763
+description: Профиль пользователя
+type: object
+properties:
+  name:
+    type: string
+    description: Имя пользователя
+required:
+  - name

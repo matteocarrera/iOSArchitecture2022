@@ -1,0 +1,13 @@
+title: LoginSMSRequestBody
+description: Тело запроса на вход по телефону и смс коду
+type: object
+properties:
+  phone:
+    type: string
+    description: Номер телефона
+  smsCode:
+    type: string
+    description: Код из смс
+required:
+  - phone
+  - smsCode

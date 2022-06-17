@@ -1,0 +1,9 @@
+title: SMSSendResponse
+description: "Ответ на запрос кода авторизации пользователя"
+type: object
+properties:
+  lifetime:
+    type: integer
+    description: Время действия кода в секундах
+required:
+  - lifetime

@@ -35,6 +35,14 @@ final class TokenStorageService {
         }
     }
 
+    var isAccessTokenValid: Bool {
+        guard let accessToken = accessToken else {
+            return false
+        }
+
+        return accessToken.expiration > Date()
+    }
+
     init(injecting resolver: TokenStorageServiceDependencyResolver) {
         keyValueEncoder = JSONKeyValueEncoder(jsonEncoder: resolver.jsonCodingConfigurator.jsonEncoder)
         keyValueDecoder = JSONKeyValueDecoder(jsonDecoder: resolver.jsonCodingConfigurator.jsonDecoder)

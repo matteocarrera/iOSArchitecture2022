@@ -19,7 +19,7 @@ class MapPresenter: NSObject {
             case let .success(officess):
                 show(officess: officess)
             case let.failure(errorResponse):
-                show(error: errorResponse)
+                show(error: errorResponse.firstOr(.default))
             }
         }
     }

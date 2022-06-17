@@ -22,7 +22,7 @@ extension String {
     static let busyPhoneNumber = "busy_phone_number"
 
     // 401
-    static let invalidJwtToken = "Invalid JWT Token"
+    static let invalidJwtToken = "invalid_jwt_token"
 
     // 403
     static let userAlreadyExists = "User already exists"

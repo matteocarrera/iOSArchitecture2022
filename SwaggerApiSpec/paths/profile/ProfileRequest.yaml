@@ -1,0 +1,33 @@
+get:
+  operationId: ProfileRequest
+  summary: Запрос на получение информации о пользователе
+  tags:
+    - profile
+  security:
+    - AccessTokenAuth: []
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/profile/ProfileResponse.yaml"
+    '400':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"
+    '401':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"
+    '404':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"
+    '500':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"

@@ -28,7 +28,7 @@ struct OfficessService {
                                                                                             query: query),
                                                                                 server: .pickupPointsServer))
             .map { $0.data.websiteOffices }
-            .mapError { $0.errorResponse }
+            .mapError { $0.map { $0.errorResponse } }
     }
 }
 

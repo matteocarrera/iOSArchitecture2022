@@ -1,27 +1,26 @@
-get:
-  operationId: ProfileRequest
-  summary: Запрос на получение информации о пользователе
+post:
+  operationId: SMSSendRequest
   tags:
-    - profile
-  security:
-    - AccessTokenAuth: []
+    - auth
+  summary: "Отправка смс для получения кода авторизации пользователя"
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../requestBodies/auth/SMSSendRequestBody.yaml"  
   responses:
     '200':
       content:
         application/json:
           schema:
-            $ref: "../../responses/ProfileResponse.yaml"
+            $ref: "../../responses/SMSSendResponse.yaml"
     '400':
       content:
         application/json:
           schema:
             $ref: "../../responses/ErrorResponse.yaml"
-    '401':
-      content:
-        application/json:
-          schema:
-            $ref: "../../responses/ErrorResponse.yaml"
-    '404':
+    '403':
       content:
         application/json:
           schema:
@@ -31,3 +30,4 @@ get:
         application/json:
           schema:
             $ref: "../../responses/ErrorResponse.yaml"
+

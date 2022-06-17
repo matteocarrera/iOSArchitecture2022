@@ -1,0 +1,45 @@
+put:
+  operationId: ProfileCommunicationRequest
+  summary: Отправка кода по СМС или почте, также повторная отправка кода
+  tags:
+    - profile
+  security:
+    - AccessTokenAuth: []
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: "../../requestBodies/profile/ProfileCommunicationRequestBody.yaml"
+  responses:
+    '200':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/profile/ProfileCommunicationResponse.yaml"
+    '400':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"
+    '401':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"
+    '403':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"
+    '429':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"
+    '500':
+      content:
+        application/json:
+          schema:
+            $ref: "../../responses/ErrorResponse.yaml"

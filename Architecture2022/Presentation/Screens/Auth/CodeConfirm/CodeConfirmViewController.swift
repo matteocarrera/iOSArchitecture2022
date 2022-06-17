@@ -1,20 +1,17 @@
-import Foundation
 import TIUIKitCore
-import TISwiftUtils
+import UIKit
 
-final class CodeConfirmViewController: BaseViewController<CodeConfirmView, CodeConfirmPresenter> {
+final class CodeConfirmViewController: BaseViewController<CodeConfirmView, ProjectCodeConfirmPresenter> {
+    override func viewDidLoad() {
+        super.viewDidLoad()
 
-    struct Output {
-        let onCodeConfirm: VoidClosure
+        viewModel.viewDidPresented()
     }
 
-    var output: Output?
 
-    @objc private func confirmButtonTapped() {
-        guard let code = customView.code else {
-            return
-        }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
 
-        viewModel.check(code: code)
+        customView.becomeFirstResponder()
     }
 }

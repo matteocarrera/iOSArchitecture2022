@@ -9,11 +9,17 @@ paths:
   # Auth
   /api/v3/mobile/auth/login/password/:
     $ref: "./paths/auth/LoginPasswordRequest.yaml"
+  /api/v3/mobile/auth/sms/send/:
+    $ref: "./paths/auth/SMSSendRequest.yaml"
+  /api/v3/mobile/auth/login/sms/:
+    $ref: "./paths/auth/LoginSMSRequest.yaml"
   /api/v3/mobile/auth/tokens/renew/:
     $ref: "./paths/auth/TokensRenewRequest.yaml"
   # Profile
   /api/v3/mobile/profile/:
-    $ref: "./paths/auth/ProfileRequest.yaml"
+    $ref: "./paths/profile/ProfileRequest.yaml"
+  /api/v3/mobile/profile/communication/:
+    $ref: "./paths/profile/ProfileCommunicationRequest.yaml"
   # Pickup points
   /graphql:
     $ref: "./paths/officess/GraphQLRequest.yaml"

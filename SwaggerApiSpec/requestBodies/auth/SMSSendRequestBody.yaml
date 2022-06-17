@@ -1,0 +1,9 @@
+title: SMSSendRequestBody
+description: Тело запроса на запрос смс кода для входа
+type: object
+properties:
+  phone:
+    type: string
+    description: Номер телефона
+required:
+  - phone

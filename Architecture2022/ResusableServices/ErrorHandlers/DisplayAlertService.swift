@@ -1,40 +1,50 @@
 import UIKit
-import TIMoyaNetworking
+import TINetworking
+import TIFoundationUtils
 
-final class DisplayAlertService: AsyncErrorHandler {
-    weak var hostViewController: UIViewController?
+final class DisplayAlertService: EndpointRequestRetrier {
+    typealias CompletionClosure = (EndpointRetryResult) -> Void
 
-    // MARK: - ErrorHandler
+    typealias ErrorResult = ProjectNetworkService.ErrorType
 
-    func handle(_ error: EndpointErrorResult<ErrorResponse>) async -> Bool {
-        await withCheckedContinuation { continuation in
-            DispatchQueue.main.async { [weak hostViewController] in
-                let alertController = Self.composeAlert(for: error, continuation: continuation)
+    func validateAndRepair(errorResults: [ProjectNetworkService.ErrorType],
+                           completion: @escaping CompletionClosure) -> Cancellable {
 
-                guard let hostViewController = hostViewController else {
-                    continuation.resume(returning: false)
-                    return
-                }
+        let alertController = Self.composeAlert(for: errorResults, completion: completion)
 
-                hostViewController.present(alertController, animated: true, completion: nil)
+        guard let hostViewController = hostViewController else {
+            return Cancellables.nonCancellable()
+        }
+
+        DispatchQueue.main.async {
+            hostViewController.present(alertController, animated: true, completion: nil)
+        }
+
+        return WeakTargetCancellable(target: alertController) { weakAlertController in
+            DispatchQueue.main.async {
+                weakAlertController?.dismiss(animated: true, completion: nil)
             }
         }
     }
+
+    weak var hostViewController: UIViewController?
+
+    // MARK: - ErrorHandler
 
     func update(hostViewController: UIViewController?) {
         self.hostViewController = hostViewController
     }
 
-    private static func composeAlert(for error: EndpointErrorResult<ErrorResponse>,
-                                     continuation: CheckedContinuation<Bool, Never>) -> UIAlertController {
+    private static func composeAlert(for errors: [ProjectNetworkService.ErrorType],
+                                     completion: @escaping CompletionClosure) -> UIAlertController {
 
         let alertController = UIAlertController(title: "An error has occured",
-                                                message: error.errorResponse.message,
+                                                message: errors.last?.errorResponse.errorMessage,
                                                 preferredStyle: .alert)
 
         let okAction = UIAlertAction(title: "OK",
                                      style: .default) { _ in
-            continuation.resume(returning: false)
+            completion(.success(.doNotRetry))
         }
 
         alertController.addAction(okAction)

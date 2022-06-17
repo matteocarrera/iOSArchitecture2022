@@ -16,12 +16,12 @@ struct ErrorHandlingRegistrationService {
 
     func registerInvisibleHandlers() {
         // avoid circular dependency problem: RefreshTokenService -> ProjectNetworkService -> RefreshTokenService
-        networkService.register(defaultErrorHandler: refreshTokenService)
+        networkService.register(defaultRequestRetrier: refreshTokenService)
     }
 
     func registerUIHandlers(alertHostViewController: UIViewController) {
         displayAlertService.update(hostViewController: alertHostViewController)
-        networkService.register(defaultErrorHandler: displayAlertService)
+        networkService.register(defaultRequestRetrier: displayAlertService)
     }
 
     func updateAlertHostController(alertHostViewController: UIViewController) {
