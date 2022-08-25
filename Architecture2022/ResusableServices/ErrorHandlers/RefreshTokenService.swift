@@ -8,7 +8,7 @@ final class RefreshTokenService: EndpointResponseTokenInterceptor<ErrorResponse,
     var authService: AuthService
 
     init(injecting: RefreshTokenServiceDependencyResolver) {
-        super.init { [authService = injecting.authService] _, _ in
+        super.init { [authService = injecting.authService] _, _, _ in
             authService.tokenStorage.isAccessTokenValid
         } refreshTokenClosure: { [authService = injecting.authService] errorCompletion in
             _Concurrency.Task {

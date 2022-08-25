@@ -14,8 +14,9 @@ final class ProjectNetworkService: DefaultRecoverableJsonNetworkService<ErrorRes
                    jsonCodingConfigurator: resolver.jsonCodingConfigurator,
                    openApi: .PetshopAPI)
 
-        let accessTokenPreprocessor = DefaultSecuritySchemePreprocessor { [tokenStorageService] in
-            tokenStorageService.accessToken?.value
+        let accessTokenPreprocessor = DefaultSecuritySchemePreprocessor { [tokenStorageService] completion in
+            completion(tokenStorageService.accessToken?.value)
+            return Cancellables.nonCancellable()
         }
 
         register(securityPreprocessors: [
