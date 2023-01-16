@@ -1,3 +1,4 @@
+import TIDeeplink
 import UIKit
 
 @MainActor
@@ -25,6 +26,9 @@ final class ApplicationFlow {
 
     func start(on window: UIWindow) {
         self.window = window
+
+        TIDeeplinkService.shared.deeplinkHandler = mainFlow
+        TIDeeplinksService.shared.deeplinkMapper = AppDeeplinkMapper()
 
         let navigationController = UINavigationController()
         rootNavigation = navigationController

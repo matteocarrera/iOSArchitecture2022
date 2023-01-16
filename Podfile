@@ -7,6 +7,7 @@ target 'Architecture2022' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
+  pod 'TIDeeplink'
   pod 'WeaverDI'
   pod 'TIMapUtils'
   pod 'TIYandexMapUtils'

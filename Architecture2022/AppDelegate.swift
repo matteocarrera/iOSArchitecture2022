@@ -1,3 +1,4 @@
+import TIDeeplink
 import UIKit
 
 @main
@@ -21,4 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        TIDeeplinksService.shared.deferredHandle(url: url)
+        TIDeeplinksService.shared.tryHandle()
+        return true
+    }
 }

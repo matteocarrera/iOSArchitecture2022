@@ -10,10 +10,33 @@ struct ProfileView: View {
                 .animated(presenter.state.isLoading)
                 .style(.regular)
         } else if case let .content(content) = presenter.state {
-            Text("Hello, " + content.name)
+            createProfileView(with: content.name)
         } else if case let .error(errorResponse) = presenter.state {
             Text(errorResponse.errorMessage)
         }
+    }
+
+    @ViewBuilder
+    func createProfileView(with name: String) -> some View {
+        VStack(spacing: 10) {
+            Text("Hello, " + name)
+
+            if #available(iOS 16, *) {
+                createUrlText(URL.profileDetails)
+                createUrlText(URL.editProfile)
+            }
+        }
+    }
+
+    @available(iOS 16, *)
+    @ViewBuilder
+    func createUrlText(_ url: URL) -> some View {
+        Text(url, format: .url)
+            .bold()
+            .foregroundColor(.blue)
+            .onTapGesture {
+                _ = UIApplication.shared.delegate?.application?(.shared, open: url)
+            }
     }
 }
 

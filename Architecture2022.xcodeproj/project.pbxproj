@@ -81,6 +81,13 @@
 		67AE0F1D28533BEE007E0763 /* MainFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67AE0F1C28533BEE007E0763 /* MainFlow.swift */; };
 		67D8A0A6281175D10044749C /* officess.json in Resources */ = {isa = PBXBuildFile; fileRef = 67D8A0A5281175D10044749C /* officess.json */; };
 		67FB945E2852192700F1D9D2 /* PetshopAPI+OpenAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67FB945D2852192700F1D9D2 /* PetshopAPI+OpenAPI.swift */; };
+		D92A886529756EB7001F348A /* AppDeeplink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92A886429756EB7001F348A /* AppDeeplink.swift */; };
+		D92A886B297571AB001F348A /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92A886A297571AB001F348A /* EditProfileView.swift */; };
+		D92A886D297571BC001F348A /* EditProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92A886C297571BC001F348A /* EditProfilePresenter.swift */; };
+		D92A886F297571CB001F348A /* DetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92A886E297571CB001F348A /* DetailsPresenter.swift */; };
+		D92A8871297571D7001F348A /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92A8870297571D7001F348A /* DetailsView.swift */; };
+		D92A8873297572E4001F348A /* AppDeeplinkMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92A8872297572E4001F348A /* AppDeeplinkMapper.swift */; };
+		D92A887529757380001F348A /* URL+Deeplink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D92A887429757380001F348A /* URL+Deeplink.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -157,6 +164,13 @@
 		67FB945D2852192700F1D9D2 /* PetshopAPI+OpenAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PetshopAPI+OpenAPI.swift"; sourceTree = "<group>"; };
 		7463718C013B989BD8688D64 /* Pods_Architecture2022.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Architecture2022.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		969E717B88E1F823172B9E57 /* Pods-Architecture2022.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Architecture2022.release.xcconfig"; path = "Target Support Files/Pods-Architecture2022/Pods-Architecture2022.release.xcconfig"; sourceTree = "<group>"; };
+		D92A886429756EB7001F348A /* AppDeeplink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDeeplink.swift; sourceTree = "<group>"; };
+		D92A886A297571AB001F348A /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
+		D92A886C297571BC001F348A /* EditProfilePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfilePresenter.swift; sourceTree = "<group>"; };
+		D92A886E297571CB001F348A /* DetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPresenter.swift; sourceTree = "<group>"; };
+		D92A8870297571D7001F348A /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
+		D92A8872297572E4001F348A /* AppDeeplinkMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDeeplinkMapper.swift; sourceTree = "<group>"; };
+		D92A887429757380001F348A /* URL+Deeplink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Deeplink.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,6 +286,7 @@
 		6746F49A277DAE0D0060BA5E /* Architecture2022 */ = {
 			isa = PBXGroup;
 			children = (
+				D92A886329756E58001F348A /* Deeplink */,
 				6730FF7B27BD13E800008003 /* Networking */,
 				6756342B278F0B0F000EE920 /* TICandidates */,
 				67563415278EE651000EE920 /* ResusableServices */,
@@ -473,6 +488,10 @@
 			children = (
 				67AE0F1828533267007E0763 /* ProfileView.swift */,
 				67AE0F1A2853329D007E0763 /* ProfilePresenter.swift */,
+				D92A886A297571AB001F348A /* EditProfileView.swift */,
+				D92A886C297571BC001F348A /* EditProfilePresenter.swift */,
+				D92A886E297571CB001F348A /* DetailsPresenter.swift */,
+				D92A8870297571D7001F348A /* DetailsView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -484,6 +503,16 @@
 				969E717B88E1F823172B9E57 /* Pods-Architecture2022.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D92A886329756E58001F348A /* Deeplink */ = {
+			isa = PBXGroup;
+			children = (
+				D92A886429756EB7001F348A /* AppDeeplink.swift */,
+				D92A8872297572E4001F348A /* AppDeeplinkMapper.swift */,
+				D92A887429757380001F348A /* URL+Deeplink.swift */,
+			);
+			path = Deeplink;
 			sourceTree = "<group>";
 		};
 		DF3A608FB339A0E077B8758B /* Frameworks */ = {
@@ -677,6 +706,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6716E638280FFDCE0049BA29 /* OfficessAPI.swift in Sources */,
+				D92A886F297571CB001F348A /* DetailsPresenter.swift in Sources */,
 				6746F4C2277DB0ED0060BA5E /* ApplicationFlow.swift in Sources */,
 				67563433278F1819000EE920 /* StorageKey+AppKeys.swift in Sources */,
 				6756343E278F1EFB000EE920 /* ProjectCodeConfirmPresenter.swift in Sources */,
@@ -694,6 +724,7 @@
 				6716E642280FFDCF0049BA29 /* PetshopAPI+Servers.swift in Sources */,
 				674771C52812E95A00AAB476 /* OfficeMarkerIconFactory.swift in Sources */,
 				6716E639280FFDCE0049BA29 /* APIDateFormat.swift in Sources */,
+				D92A886B297571AB001F348A /* EditProfileView.swift in Sources */,
 				6730FF9827BD371D00008003 /* ApiResponse.swift in Sources */,
 				67AE0F1D28533BEE007E0763 /* MainFlow.swift in Sources */,
 				674771CB2812FD0F00AAB476 /* GoogleMapPresenter.swift in Sources */,
@@ -703,6 +734,7 @@
 				67563418278EE9A0000EE920 /* DisplayAlertService.swift in Sources */,
 				674771C82812FCB800AAB476 /* YandexMapPresenter.swift in Sources */,
 				6746F49C277DAE0D0060BA5E /* AppDelegate.swift in Sources */,
+				D92A8871297571D7001F348A /* DetailsView.swift in Sources */,
 				6730FF7227BCFBE300008003 /* ProjectDateFormattingService.swift in Sources */,
 				67AE0F1928533267007E0763 /* ProfileView.swift in Sources */,
 				67812CA02846436100903C1F /* SMSSendResponse+CodeRefreshResponse.swift in Sources */,
@@ -725,6 +757,7 @@
 				6746F4D1277DE9270060BA5E /* PhoneLoginView.swift in Sources */,
 				6771A2BF283E4BEB00F7829A /* SMSSendRequestBody.swift in Sources */,
 				6756341A278EEBED000EE920 /* RefreshTokenService.swift in Sources */,
+				D92A886529756EB7001F348A /* AppDeeplink.swift in Sources */,
 				673A19E728452C1000738E58 /* CommunicationType.swift in Sources */,
 				674E606927C3E2030067DD05 /* ErrorHandlingRegistrationService.swift in Sources */,
 				6716E61E280FFBC10049BA29 /* ProjectDisplayDecodingErrorPlugin.swift in Sources */,
@@ -737,9 +770,12 @@
 				6716E640280FFDCF0049BA29 /* GraphQLOfficesResponse.swift in Sources */,
 				67301E2D27BFC19300862504 /* ProjectJsonCodingConfigurator.swift in Sources */,
 				6716E617280FE2C50049BA29 /* OfficessService.swift in Sources */,
+				D92A887529757380001F348A /* URL+Deeplink.swift in Sources */,
 				6756343C278F1ED0000EE920 /* CodeConfirmView.swift in Sources */,
 				67563438278F1E3D000EE920 /* CodeConfirmViewController.swift in Sources */,
 				674771CD2813016100AAB476 /* GoogleMapViewController.swift in Sources */,
+				D92A886D297571BC001F348A /* EditProfilePresenter.swift in Sources */,
+				D92A8873297572E4001F348A /* AppDeeplinkMapper.swift in Sources */,
 				6730FF9627BD36BD00008003 /* ErrorType.swift in Sources */,
 				6746F4D5277DF07A0060BA5E /* PreviewDependencies.swift in Sources */,
 				67563414278EE636000EE920 /* AuthFlow.swift in Sources */,
