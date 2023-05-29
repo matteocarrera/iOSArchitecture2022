@@ -39,7 +39,7 @@ final class AuthService {
 
     func refreshToken() async -> ProjectNetworkService.RequestResult<TokensResponse, ErrorResponse> {
         guard let refreshToken = tokenStorage.refreshToken else {
-            return .failure(.apiError(.localTokenMissing()))
+            return .failure(.apiError(.localTokenMissing(), .max))
         }
 
         let body = TokensRenewRequestBody(refreshToken: refreshToken.value)

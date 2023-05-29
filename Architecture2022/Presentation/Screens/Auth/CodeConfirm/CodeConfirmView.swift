@@ -39,9 +39,9 @@ final class CodeConfirmView: BaseInitializableView {
 
         codeTextField.keyboardType = .numberPad
 
-        requestNewCodeButton.set(backgroundColors: [
-            .normal: .blue,
-            .disabled: .clear
+        requestNewCodeButton.set(appearance: [
+            .normal: .init(backgroundColor: .blue),
+            .disabled: .init(backgroundColor: .clear)
         ])
 
         requestNewCodeButton.set(titleColors: [

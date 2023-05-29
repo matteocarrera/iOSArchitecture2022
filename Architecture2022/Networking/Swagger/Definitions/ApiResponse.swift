@@ -15,7 +15,7 @@ typealias ApiResponse<ResponseType> = Result<ResponseType, ErrorCollection<Error
 extension EndpointErrorResult where ApiError == ErrorResponse, NetworkError == MoyaError {
     var errorResponse: ErrorResponse {
         switch self {
-        case let .apiError(errorResponse):
+        case let .apiError(errorResponse, _):
             return errorResponse
         case let .networkError(moyaError):
             return moyaError.convertToErrorResponse()

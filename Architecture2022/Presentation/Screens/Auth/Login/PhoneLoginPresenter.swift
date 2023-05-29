@@ -48,7 +48,7 @@ final class PhoneLoginPresenter: SwiftUIPresenter {
             switch await authService.authorization(credentials: dataModel) {
             case let .success(response):
                 output.otpRequested(ModuleResult(phone: dataModel.phone, smsSendResponse: response))
-                break
+                
             case let .failure(errorResult):
                 self.errorResponse = errorResult.failures.first?.errorResponse
             }

@@ -20,7 +20,7 @@ final class RefreshTokenService: EndpointResponseTokenInterceptor<ErrorResponse,
                 }
             }
         } isTokenInvalidErrorResultClosure: { endpointErrorResult in
-            guard case let .apiError(apiError) = endpointErrorResult else {
+            guard case let .apiError(apiError, _) = endpointErrorResult else {
                 return false
             }
 

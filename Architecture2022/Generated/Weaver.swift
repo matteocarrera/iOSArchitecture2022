@@ -4,6 +4,7 @@ import KeychainAccess
 import LocalAuthentication
 import Moya
 import SwiftUI
+import TIAuth
 import TIFoundationUtils
 import TIKeychainUtils
 import TIMoyaNetworking

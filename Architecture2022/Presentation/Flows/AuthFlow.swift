@@ -1,5 +1,6 @@
 import SwiftUI
 import TISwiftUtils
+import TIAuth
 
 @MainActor
 final class AuthFlow {
@@ -24,15 +25,20 @@ final class AuthFlow {
         } else {
             debugPrint("Open auth flow")
 
-            let presenter = PhoneLoginPresenter(authService: authService,
-                                output: .init(otpRequested: { [weak self] in
-                self?.startCodeConfirm(navigation: rootNavigation,
-                                       phoneLoginResult: $0,
-                                       completion: completion)
-            }))
-
-            rootNavigation.pushViewController(UIHostingController(rootView: presenter.createView()), animated: false)
+            startPhoneLogin(on: rootNavigation, completion: completion)
         }
+    }
+
+    private func startPhoneLogin(on rootNavigation: UINavigationController,
+                                 completion: @escaping ResultCompletion) {
+        let presenter = PhoneLoginPresenter(authService: authService,
+                                            output: .init(otpRequested: { [weak self] in
+            self?.startCodeConfirm(navigation: rootNavigation,
+                                   phoneLoginResult: $0,
+                                   completion: completion)
+        }))
+
+        rootNavigation.pushViewController(UIHostingController(rootView: presenter.createView()), animated: false)
     }
 
     private func startCodeConfirm(navigation: UINavigationController,
@@ -44,7 +50,7 @@ final class AuthFlow {
                                                                        output: .init(onConfirmSuccess: { _ in
             completion()
         }))
-            .createViewController()
+        .createViewController()
 
         navigation.pushViewController(codeConfirmViewController, animated: true)
     }

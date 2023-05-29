@@ -3,15 +3,15 @@ import TIMapUtils
 
 final class OfficeMarkerIconFactory: DefaultCachableMarkerIconFactory<Office, NSString> {
     init() {
-        super.init {
-            switch $0.type {
+        super.init { office, _ in
+            switch office.type {
             case .postamat:
                 return #imageLiteral(resourceName: "PinPostamat")
             case .pvz:
                 return #imageLiteral(resourceName: "PinPvz")
             }
-        } cacheKeyProvider: {
-            $0.type.rawValue as NSString
+        } cacheKeyProvider: { office, _ in
+            office.type.rawValue as NSString
         }
     }
 

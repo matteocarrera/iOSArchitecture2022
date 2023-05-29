@@ -8,7 +8,6 @@ final class CodeConfirmViewController: BaseViewController<CodeConfirmView, Proje
         viewModel.viewDidPresented()
     }
 
-
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 

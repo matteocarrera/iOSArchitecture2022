@@ -1,5 +1,5 @@
 source 'https://cdn.cocoapods.org/'
-source 'git@github.com:TouchInstinct/Podspecs'
+source 'https://git.svc.touchin.ru/TouchInstinct/Podspecs.git'
 
 platform :ios, '13.0'
 
@@ -12,5 +12,9 @@ target 'Architecture2022' do
   pod 'TIYandexMapUtils'
   pod 'TIGoogleMapUtils'
   pod 'TIAppleMapUtils'
+  pod 'TIMoyaNetworking'
+  pod 'TIAuth'
+  pod 'TISwiftUICore'
+  pod 'TIUIElements'
 
 end

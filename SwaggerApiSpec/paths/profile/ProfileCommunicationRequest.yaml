@@ -5,7 +5,6 @@ put:
     - profile
   security:
     - AccessTokenAuth: []
-    - BearerAuth: []
   requestBody:
     required: true
     content:

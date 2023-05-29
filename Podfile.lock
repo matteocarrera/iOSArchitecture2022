@@ -1,4 +1,5 @@
 PODS:
+  - Alamofire (5.7.1)
   - Google-Maps-iOS-Utils (4.1.0):
     - Google-Maps-iOS-Utils/Clustering (= 4.1.0)
     - Google-Maps-iOS-Utils/Geometry (= 4.1.0)
@@ -18,52 +19,114 @@ PODS:
     - GoogleMaps
   - Google-Maps-iOS-Utils/QuadTree (4.1.0):
     - GoogleMaps
-  - GoogleMaps (6.2.1):
-    - GoogleMaps/Maps (= 6.2.1)
-  - GoogleMaps/Base (6.2.1)
-  - GoogleMaps/Maps (6.2.1):
+  - GoogleMaps (7.4.0):
+    - GoogleMaps/Maps (= 7.4.0)
+  - GoogleMaps/Base (7.4.0)
+  - GoogleMaps/Maps (7.4.0):
     - GoogleMaps/Base
-  - TIAppleMapUtils (1.18.0):
-    - TIMapUtils (= 1.18.0)
-  - TIGoogleMapUtils (1.18.0):
+  - KeychainAccess (4.2.2)
+  - Moya (15.0.0):
+    - Moya/Core (= 15.0.0)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - TIAppleMapUtils (1.45.0):
+    - TIMapUtils (= 1.45.0)
+  - TIAuth (1.45.0):
+    - TIFoundationUtils (= 1.45.0)
+    - TIKeychainUtils (= 1.45.0)
+    - TIUIKitCore (= 1.45.0)
+  - TIFoundationUtils (1.45.0):
+    - TISwiftUtils (= 1.45.0)
+  - TIGoogleMapUtils (1.45.0):
     - Google-Maps-iOS-Utils (~> 4)
-    - TIMapUtils (= 1.18.0)
-  - TIMapUtils (1.18.0)
-  - TIYandexMapUtils (1.18.0):
-    - TIMapUtils (= 1.18.0)
-    - YandexMapsMobile (= 4.0.0-lite)
+    - TIMapUtils (= 1.45.0)
+  - TIKeychainUtils (1.45.0):
+    - KeychainAccess (~> 4.2)
+    - TIFoundationUtils (= 1.45.0)
+  - TILogging (1.45.0)
+  - TIMapUtils (1.45.0)
+  - TIMoyaNetworking (1.45.0):
+    - Moya (~> 15.0)
+    - TIFoundationUtils (= 1.45.0)
+    - TINetworking (= 1.45.0)
+  - TINetworking (1.45.0):
+    - Alamofire (~> 5.4)
+    - TIFoundationUtils (= 1.45.0)
+    - TILogging (= 1.45.0)
+  - TISwiftUICore (1.45.0):
+    - TISwiftUtils (= 1.45.0)
+    - TIUIKitCore (= 1.45.0)
+  - TISwiftUtils (1.45.0)
+  - TIUIElements (1.45.0):
+    - TISwiftUtils (= 1.45.0)
+    - TIUIKitCore (= 1.45.0)
+  - TIUIKitCore (1.45.0):
+    - TISwiftUtils (= 1.45.0)
+  - TIYandexMapUtils (1.45.0):
+    - TIMapUtils (= 1.45.0)
+    - YandexMapsMobile (= 4.3.1-lite)
   - WeaverDI (1.0.7)
-  - YandexMapsMobile (4.0.0-lite)
+  - YandexMapsMobile (4.3.1-lite)
 
 DEPENDENCIES:
   - TIAppleMapUtils
+  - TIAuth
   - TIGoogleMapUtils
   - TIMapUtils
+  - TIMoyaNetworking
+  - TISwiftUICore
+  - TIUIElements
   - TIYandexMapUtils
   - WeaverDI
 
 SPEC REPOS:
-  "git@github.com:TouchInstinct/Podspecs.git":
+  https://git.svc.touchin.ru/TouchInstinct/Podspecs.git:
     - TIAppleMapUtils
+    - TIAuth
+    - TIFoundationUtils
     - TIGoogleMapUtils
+    - TIKeychainUtils
+    - TILogging
     - TIMapUtils
+    - TIMoyaNetworking
+    - TINetworking
+    - TISwiftUICore
+    - TISwiftUtils
+    - TIUIElements
+    - TIUIKitCore
     - TIYandexMapUtils
   trunk:
+    - Alamofire
     - Google-Maps-iOS-Utils
     - GoogleMaps
+    - KeychainAccess
+    - Moya
     - WeaverDI
     - YandexMapsMobile
 
 SPEC CHECKSUMS:
+  Alamofire: 0123a34370cb170936ae79a8df46cc62b2edeb88
   Google-Maps-iOS-Utils: 3343332b18dfd5be8f1f44edd7d481ace3da4d9a
-  GoogleMaps: 20d7b12be49a14287f797e88e0e31bc4156aaeb4
-  TIAppleMapUtils: b06213154c4a7a35212d9e05cfd765b682d81511
-  TIGoogleMapUtils: 070abcfabd52e7423c67d6b62d71fa2db677abc8
-  TIMapUtils: 169aa6697cff18a6115e699685d134e789ee201d
-  TIYandexMapUtils: 7233db7e4b5bfce271050abfca41dbcec56e7cb3
+  GoogleMaps: 032f676450ba0779bd8ce16840690915f84e57ac
+  KeychainAccess: c0c4f7f38f6fc7bbe58f5702e25f7bd2f65abf51
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  TIAppleMapUtils: 1d22dce5bb8c8bfbfd6cbdc250374e6788147286
+  TIAuth: db4ab8be413396f99817f555736e73d05c6fe01a
+  TIFoundationUtils: 905b18061bc748c14b0fd23bd1954dff7ba836c8
+  TIGoogleMapUtils: 9eec697b8d47afb629076374d08670129ae2c87a
+  TIKeychainUtils: a34c104f31b933c1f1a4b271bb8b066a9ebb5633
+  TILogging: bd74d8e7485f18f826b8705293ae44a47e11aca3
+  TIMapUtils: ea1e0112ce7059e380ac226d3b8962655afeccf7
+  TIMoyaNetworking: b42f11e8773112e82ccc8e9e78b6a99190416cf1
+  TINetworking: c862dd1161a0f8efb17be7b61730e5b5b65304e2
+  TISwiftUICore: 8c3bd65749d78a2b77328d94c0293652cc487097
+  TISwiftUtils: 043efc1c506f680197a36bd6855e24f0b426182d
+  TIUIElements: 29900f98779161a4e653e425a1d28fd7852e4075
+  TIUIKitCore: 018b758e1469a44d8cc246cc3624f2dc5d97d376
+  TIYandexMapUtils: 2a9708c24b4a5d3ebe55b8d6bcef9fc44e55ce61
   WeaverDI: 1fd0392c5823dd8ba926a5acabc3d11d7de4c8fe
-  YandexMapsMobile: d7d7f3b452209b4c2787beb53bb2dfcea259c70c
+  YandexMapsMobile: ac7be2e2876883430675cbfa5eeb39544f8d7c20
 
-PODFILE CHECKSUM: c8960a8c0f2ce6a3e477b2dd1b517033f3cec31d
+PODFILE CHECKSUM: c99f63cacb6bc21a486b898e90cbe7efe0d52cfa
 
 COCOAPODS: 1.11.3
